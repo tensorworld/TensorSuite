@@ -356,7 +356,7 @@ code {
 }
 
 .related-grid .resource-card {
-  min-height: 15rem;
+  min-height: 9.5rem;
   display: flex;
   flex-direction: column;
 }
