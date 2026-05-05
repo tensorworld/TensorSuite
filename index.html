@@ -17,9 +17,11 @@
         <span>TensorSuite</span>
       </a>
       <nav class="nav-links" aria-label="Project links">
-        <a href="#quick-start">Quick Start</a>
         <a href="#format">Format</a>
-        <a href="https://github.com/tensorworld/TensorSuite-Code">Code</a>
+        <a href="#synthetic">Synthetic</a>
+        <a href="#real">Real</a>
+        <a href="#analysis">Analysis</a>
+        <a href="#related-work">Related</a>
       </nav>
     </header>
 
@@ -31,42 +33,30 @@
           <p class="eyebrow">Synthetic sparse tensor generation suite</p>
           <h1 id="hero-title">TensorSuite</h1>
           <p class="hero-copy">
-            Generate controlled sparse tensor workloads for COO and HiCOO
-            experiments, with configurable density patterns, precision, and
-            memory-aware safety checks.
+            A landing page for synthetic tensor generators, real tensor
+            collections, tensor analysis scripts, and tensor format notes.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="#quick-start">Start generating</a>
+            <a class="button primary" href="#synthetic">Synthetic tensors</a>
+            <a class="button secondary" href="#real">Real tensors</a>
             <a class="button secondary" href="https://github.com/tensorworld/TensorSuite-Code">View source</a>
           </div>
         </div>
       </section>
 
-      <section class="overview" aria-label="TensorSuite capabilities">
-        <div class="overview-item">
-          <span class="metric">3D-5D</span>
-          <span class="metric-label">Batch generation presets</span>
-        </div>
-        <div class="overview-item">
-          <span class="metric">COO</span>
-          <span class="metric-label">Coordinate tensor output</span>
-        </div>
-        <div class="overview-item">
-          <span class="metric">S / D</span>
-          <span class="metric-label">Single or double precision</span>
-        </div>
-      </section>
-
-      <section class="content-section split" id="quick-start">
+      <section class="content-section split first-section" id="synthetic">
         <div>
-          <p class="section-kicker">Quick Start</p>
-          <h2>Generate one tensor or a complete benchmark batch.</h2>
+          <p class="section-kicker">Synthetic Tensor Generation</p>
+          <h2>Controlled sparse tensor generators for experiments.</h2>
           <p>
             TensorSuite writes <code>.tns</code> coordinate-format tensors
             whose non-zero values are sampled from a standard normal
             distribution. The limited generator estimates memory use before
             writing data.
           </p>
+          <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/SynTensorGen">
+            Open SynTensorGen code
+          </a>
         </div>
         <div class="command-panel" aria-label="Command examples">
           <div class="command-row">
@@ -78,46 +68,169 @@
             <code>bash SynTensorGen/generate_all_tensors_limited.sh</code>
           </div>
         </div>
+        <div class="resource-grid synthetic-categories" aria-label="Synthetic tensor categories">
+          <article class="resource-card">
+            <h3>Element-wise</h3>
+            <p>Element-wise sparse generators for power-law, Gaussian, and random patterns.</p>
+            <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/SynTensorGen/element-wise">Code folder</a>
+          </article>
+          <article class="resource-card">
+            <h3>Block-wise</h3>
+            <p>Structured sparse tensors whose nonzeros appear in dense or semi-dense blocks.</p>
+            <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/SynTensorGen/block-sparse">Code folder</a>
+          </article>
+          <article class="resource-card">
+            <h3>Dense</h3>
+            <p>Dense tensor generation paths for baseline workloads and format testing.</p>
+            <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/SynTensorGen/dense">Code folder</a>
+          </article>
+        </div>
       </section>
 
-      <section class="content-section cards" aria-label="Feature summary">
-        <article>
-          <h2>Density patterns</h2>
+      <section class="content-section" id="real">
+        <div class="section-heading">
+          <p class="section-kicker">Real Tensor</p>
+          <h2>Curated real-world tensor categories.</h2>
           <p>
-            Mix dense and sparse modes by passing one
-            <code>density%dimension</code> argument per tensor mode.
+            Dataset links will be attached to each tensor as they are collected,
+            whether hosted on AWS, institutional storage, or public archives.
           </p>
-        </article>
-        <article>
-          <h2>Memory thresholding</h2>
+        </div>
+        <div class="resource-grid" aria-label="Real tensor categories">
+          <article class="resource-card">
+            <h3>HyperGraph</h3>
+            <p>Hypergraph incidence, interaction, and higher-order relation tensors.</p>
+          </article>
+          <article class="resource-card">
+            <h3>Heterogenous Graph</h3>
+            <p>Multi-type node and edge data represented as sparse tensors.</p>
+          </article>
+          <article class="resource-card">
+            <h3>AI</h3>
+            <p>Model, feature, activation, and machine learning workload tensors.</p>
+          </article>
+          <article class="resource-card">
+            <h3>Quantum Circuit Simulation</h3>
+            <p>Tensor network workloads from quantum circuit contraction.</p>
+          </article>
+          <article class="resource-card">
+            <h3>Quantum Physics</h3>
+            <p>Physics simulation tensors and structured operator data.</p>
+          </article>
+          <article class="resource-card">
+            <h3>PDE</h3>
+            <p>Discretized scientific simulation tensors and sparse operators.</p>
+          </article>
+          <article class="resource-card">
+            <h3>Recommender Systems</h3>
+            <p>User-item-context interaction tensors for recommendation workloads.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section split" id="analysis">
+        <div>
+          <p class="section-kicker">Tensor Analysis Scripts</p>
+          <h2>Inspection utilities for tensor collections.</h2>
           <p>
-            Estimate NNZ and COO storage before generation, then skip workloads
-            that exceed the configured GiB limit.
+            This section will index scripts for reading headers, checking
+            dimensions, counting nonzeros, measuring sparsity, validating
+            coordinate ranges, and summarizing tensor distributions.
           </p>
-        </article>
-        <article>
-          <h2>Benchmark batches</h2>
-          <p>
-            Generate combinations of 4D and 5D tensors with repeatable naming
-            conventions for conversion and performance studies.
-          </p>
-        </article>
+          <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code">
+            Open TensorSuite-Code
+          </a>
+        </div>
+        <div class="script-panel" aria-label="Planned tensor analysis scripts">
+          <div>
+            <span class="command-label">Planned</span>
+            <p>Header parser and `.tns` schema checks</p>
+          </div>
+          <div>
+            <span class="command-label">Planned</span>
+            <p>Mode-size, NNZ, density, and memory summaries</p>
+          </div>
+          <div>
+            <span class="command-label">Planned</span>
+            <p>Coordinate validation and duplicate-entry reports</p>
+          </div>
+        </div>
       </section>
 
       <section class="content-section format" id="format">
         <div>
           <p class="section-kicker">Output Format</p>
-          <h2>Plain-text <code>.tns</code> files.</h2>
+          <h2><code>.tns</code> format notes and header documentation.</h2>
           <p>
-            The first line stores the tensor order, the second line stores mode
-            dimensions, and each following line stores one-based coordinates
-            followed by a generated floating-point value.
+            This section is reserved for detailed format documentation. The
+            current synthetic generator writes a compact header before the
+            coordinate entries; future notes can define required fields,
+            optional metadata, compatibility with external datasets, and
+            validation rules.
           </p>
         </div>
-        <pre aria-label="Tensor output example"><code>3
-1024    4096    512
-12      81      4       -0.2479184419312801
-12      81      29       1.0630250077288118</code></pre>
+        <div class="format-notes" aria-label="Format documentation outline">
+          <article>
+            <span class="command-label">Header</span>
+            <p>Line 1: tensor order. Line 2: mode dimensions.</p>
+          </article>
+          <article>
+            <span class="command-label">Entries</span>
+            <p>Each data row stores one-based coordinates followed by a value.</p>
+          </article>
+          <article>
+            <span class="command-label">To document</span>
+            <p>Metadata fields, precision policy, comments, and dataset provenance.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section" id="related-work">
+        <div class="section-heading">
+          <p class="section-kicker">Related Work</p>
+          <h2>Useful tensor tools and references.</h2>
+          <p>
+            A small reading list for visualization, tensor generation, sparse
+            tensor storage, and dataset formats.
+          </p>
+        </div>
+        <div class="resource-grid related-grid" aria-label="Related tensor work">
+          <article class="resource-card">
+            <h3>Tensorlab</h3>
+            <p>MATLAB tensor computation toolbox with higher-order visualization tools.</p>
+            <a class="text-link" href="https://www.tensorlab.net/doc/data.html">Visualization notes</a>
+          </article>
+          <article class="resource-card">
+            <h3>pyTensorlab</h3>
+            <p>Python tensor computation package with tensorization, generation, and visualization utilities.</p>
+            <a class="text-link" href="https://www.pytensorlab.net/">Project site</a>
+          </article>
+          <article class="resource-card">
+            <h3>Tensor Toolbox</h3>
+            <p>MATLAB toolbox for dense, sparse, and structured tensor analysis.</p>
+            <a class="text-link" href="https://www.tensortoolbox.org/">Project site</a>
+          </article>
+          <article class="resource-card">
+            <h3>TensorLy</h3>
+            <p>Python library for tensor decomposition, regression, tensor algebra, and tensor learning.</p>
+            <a class="text-link" href="https://tensorly.org/stable/index.html">Project site</a>
+          </article>
+          <article class="resource-card">
+            <h3>FROSTT</h3>
+            <p>Open sparse tensor repository with widely used `.tns` datasets and format notes.</p>
+            <a class="text-link" href="https://frostt.io/tensors/file-formats.html">File formats</a>
+          </article>
+          <article class="resource-card">
+            <h3>SuiteSparse</h3>
+            <p>Sparse matrix collection often used as a benchmark source and as input for synthetic tensor construction.</p>
+            <a class="text-link" href="https://sparse.tamu.edu/about">Collection</a>
+          </article>
+          <article class="resource-card">
+            <h3>GenTensor</h3>
+            <p>2025 paper and tools for feature-preserving sparse tensor generation from real tensor characteristics.</p>
+            <a class="text-link" href="https://www.frontiersin.org/journals/applied-mathematics-and-statistics/articles/10.3389/fams.2025.1589033/full">2025 paper</a>
+          </article>
+        </div>
       </section>
     </main>
 
