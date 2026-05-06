@@ -119,6 +119,7 @@
   "source_url": "",
   "storage": "coordinate",
   "value_type": "float64",
+  "value_domain": "general",
   "index_type": "uint64",
   "endianness": "little",
   "index_base": 1,
@@ -224,8 +225,13 @@
                   </tr>
                   <tr>
                     <td><code>value_type</code></td>
-                    <td><code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code>, <code>complex64</code>, <code>complex128</code></td>
-                    <td>Numeric type used by tensor values.</td>
+                    <td><code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code></td>
+                    <td>Numeric type used to store tensor values.</td>
+                  </tr>
+                  <tr>
+                    <td><code>value_domain</code></td>
+                    <td><code>general</code>, <code>nonnegative</code>, <code>binary</code></td>
+                    <td>Numerical value constraint. <code>nonnegative</code> means values are greater than or equal to zero; <code>binary</code> means values are restricted to <code>0</code> and <code>1</code>.</td>
                   </tr>
                   <tr>
                     <td><code>index_type</code></td>
