@@ -44,7 +44,252 @@
         </div>
       </section>
 
-      <section class="content-section split first-section" id="synthetic">
+      <section class="content-section format first-section" id="format">
+        <div>
+          <p class="section-kicker">Output Format</p>
+          <h2>Tensor bundles with canonical JSON metadata.</h2>
+          <p>
+            TensorSuite stores each tensor as a bundle first. The
+            <code>*_metadata.json</code> file is the canonical schema for tensor
+            attributes and metadata; <code>.tns</code> and <code>.tnsb</code>
+            are data representations inside the bundle. The JSON file stays
+            comment-free; attribute meanings and allowed values are documented
+            below.
+          </p>
+        </div>
+        <div class="format-stack" aria-label="Format documentation outline">
+          <section class="format-group" aria-labelledby="bundle-layout-title">
+            <div class="format-group-heading">
+              <p class="command-label">Bundle Layout</p>
+              <h3 id="bundle-layout-title">One folder per tensor record.</h3>
+              <p>
+                A bundle includes a tensor-name metadata file, data files, a
+                README, and any additional files the dataset needs.
+              </p>
+            </div>
+            <div class="format-notes">
+              <article>
+                <span class="command-label">Named Files</span>
+                <p>
+                  A tensor-name folder uses matching file prefixes, such as
+                  <code>nell-2_metadata.json</code>, <code>nell-2.tns</code>,
+                  and <code>nell-2.tnsb</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Binary Tensor</span>
+                <p>
+                  <code>.tnsb</code> stores tensor entries in binary form for
+                  faster loading. Large bundles may provide only
+                  <code>.tnsb</code> as the tensor data file, with
+                  <code>files.text</code> set to <code>null</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Auxiliary Data</span>
+                <p>
+                  Auxiliary data can live in the metadata JSON or as additional
+                  files in the bundle, documented by
+                  <code>README.md</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">TNSB Header</span>
+                <p>
+                  <code>.tnsb</code> keeps the same line header pattern as
+                  <code>.tns</code>; the binary payload begins immediately after
+                  the size-line newline, so <code>header_length</code> is not
+                  required for sequential loading.
+                </p>
+              </article>
+            </div>
+          </section>
+          <pre class="format-example bundle-example" aria-label="TensorSuite bundle example"><code>nell-2/
+  nell-2_metadata.json
+  nell-2.tns
+  nell-2.tnsb
+  README.md</code></pre>
+          <pre class="format-example" aria-label="TensorSuite metadata JSON example"><code>{
+  "version": "1.0",
+  "name": "nell-2",
+  "group": "FROSTT",
+  "id": "000001",
+  "time": "2026-05-05",
+  "source": "real",
+  "source_url": "",
+  "storage": "coordinate",
+  "value_type": "float64",
+  "index_type": "uint64",
+  "endianness": "little",
+  "index_base": 1,
+  "sorted": "lexicographic",
+  "sorted_order": [1, 2, 3],
+  "duplicates": "disallowed",
+  "explicit_zeros": "allowed",
+  "pattern_symmetry": "no",
+  "numerical_symmetry": "no",
+  "sparsity_type": "element",
+  "dense_modes": [],
+  "order": 3,
+  "dimensions": [12092, 9184, 28818],
+  "nnz": 76879419,
+  "files": {
+    "binary": "nell-2.tnsb",
+    "text": "nell-2.tns",
+    "readme": "README.md"
+  }
+}</code></pre>
+          <pre class="format-example bundle-example" aria-label="TensorSuite binary-only bundle example"><code>large-tensor/
+  large-tensor_metadata.json
+  large-tensor.tnsb
+  README.md</code></pre>
+          <section class="format-group" aria-labelledby="tns-format-title">
+            <div class="format-group-heading">
+              <p class="command-label">.tns File Format</p>
+              <h3 id="tns-format-title">Optional readable coordinate data.</h3>
+              <p>
+                The text file keeps a minimal cross-check header, one size
+                line, and coordinate entries. Full attributes and metadata stay
+                in the bundle metadata JSON.
+              </p>
+            </div>
+            <div class="format-notes">
+              <article>
+                <span class="command-label">Minimal Header</span>
+                <p>
+                  The first line is <code>%%TensorSuite-TNS</code>. Then
+                  <code>% version</code> and <code>% name</code> let readers
+                  cross-check the file against the metadata JSON.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Metadata JSON</span>
+                <p>
+                  <code>group</code>, <code>id</code>, <code>time</code>,
+                  <code>source</code>, size, type, ordering, and file mappings
+                  are defined in <code>*_metadata.json</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Size Line</span>
+                <p>
+                  One line gives the tensor order, all mode dimensions, and NNZ
+                  so readers can preallocate memory and validate the entry
+                  count.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Entries</span>
+                <p>
+                  Each data row stores one-based or zero-based coordinates
+                  followed by a value.
+                </p>
+              </article>
+            </div>
+          </section>
+          <pre class="format-example" aria-label="TensorSuite tns format example"><code>%%TensorSuite-TNS
+% version: 1.0
+% name: nell-2
+3 12092 9184 28818 76879419
+1 1 1 1.0000000000000000
+1 1 2 2.0000000000000000</code></pre>
+          <pre class="format-example" aria-label="TensorSuite tnsb format example"><code>%%TensorSuite-TNSB
+% version: 1.0
+% name: nell-2
+3 12092 9184 28818 76879419
+[binary coordinate/value records begin here]</code></pre>
+          <section class="format-group" aria-labelledby="attribute-values-title">
+            <div class="format-group-heading">
+              <p class="command-label">Attribute Values</p>
+              <h3 id="attribute-values-title">Allowed values for tensor attributes.</h3>
+              <p>
+                Metadata fields and tensor size fields are not listed here.
+                They are free-form identity fields or direct size information.
+              </p>
+            </div>
+            <div class="attribute-table-wrap">
+              <table class="attribute-table">
+                <thead>
+                  <tr>
+                    <th>Attribute</th>
+                    <th>Allowed Values</th>
+                    <th>Meaning</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>storage</code></td>
+                    <td><code>coordinate</code></td>
+                    <td>Coordinate entries: indices followed by one value.</td>
+                  </tr>
+                  <tr>
+                    <td><code>value_type</code></td>
+                    <td><code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code>, <code>complex64</code>, <code>complex128</code></td>
+                    <td>Numeric type used by tensor values.</td>
+                  </tr>
+                  <tr>
+                    <td><code>index_type</code></td>
+                    <td><code>uint32</code>, <code>uint64</code></td>
+                    <td>Integer type used by binary coordinate indices.</td>
+                  </tr>
+                  <tr>
+                    <td><code>endianness</code></td>
+                    <td><code>little</code>, <code>big</code></td>
+                    <td>Byte order used by binary numeric records.</td>
+                  </tr>
+                  <tr>
+                    <td><code>index_base</code></td>
+                    <td><code>0</code>, <code>1</code></td>
+                    <td>Whether coordinates are zero-based or one-based.</td>
+                  </tr>
+                  <tr>
+                    <td><code>sorted</code></td>
+                    <td><code>none</code>, <code>lexicographic</code></td>
+                    <td>Whether entries are sorted.</td>
+                  </tr>
+                  <tr>
+                    <td><code>sorted_order</code></td>
+                    <td>Permutation of mode ids, such as <code>[1,2,3]</code></td>
+                    <td>Mode priority used for lexicographic sorting.</td>
+                  </tr>
+                  <tr>
+                    <td><code>duplicates</code></td>
+                    <td><code>allowed</code>, <code>disallowed</code>, <code>summed</code></td>
+                    <td>Policy for repeated coordinates.</td>
+                  </tr>
+                  <tr>
+                    <td><code>explicit_zeros</code></td>
+                    <td><code>allowed</code>, <code>disallowed</code></td>
+                    <td>Whether stored entries may have numerical value zero.</td>
+                  </tr>
+                  <tr>
+                    <td><code>pattern_symmetry</code></td>
+                    <td><code>full</code>, <code>partial</code>, <code>no</code></td>
+                    <td>Symmetry of the nonzero coordinate pattern.</td>
+                  </tr>
+                  <tr>
+                    <td><code>numerical_symmetry</code></td>
+                    <td><code>full</code>, <code>partial</code>, <code>no</code></td>
+                    <td>Symmetry of both coordinate pattern and mirrored values.</td>
+                  </tr>
+                  <tr>
+                    <td><code>sparsity_type</code></td>
+                    <td><code>no</code>, <code>semi</code>, <code>element</code>, <code>block</code></td>
+                    <td>Dense, semi-sparse, element-sparse, or block-sparse structure.</td>
+                  </tr>
+                  <tr>
+                    <td><code>dense_modes</code></td>
+                    <td>Mode-id list, such as <code>[]</code> or <code>[1,2]</code></td>
+                    <td>Modes that are dense or nearly dense.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="content-section split" id="synthetic">
         <div>
           <p class="section-kicker">Synthetic Tensor Generation</p>
           <h2>Controlled sparse tensor generators for experiments.</h2>
@@ -158,34 +403,6 @@
             <span class="command-label">Planned</span>
             <p>Coordinate validation and duplicate-entry reports</p>
           </div>
-        </div>
-      </section>
-
-      <section class="content-section format" id="format">
-        <div>
-          <p class="section-kicker">Output Format</p>
-          <h2><code>.tns</code> format notes and header documentation.</h2>
-          <p>
-            This section is reserved for detailed format documentation. The
-            current synthetic generator writes a compact header before the
-            coordinate entries; future notes can define required fields,
-            optional metadata, compatibility with external datasets, and
-            validation rules.
-          </p>
-        </div>
-        <div class="format-notes" aria-label="Format documentation outline">
-          <article>
-            <span class="command-label">Header</span>
-            <p>Line 1: tensor order. Line 2: mode dimensions.</p>
-          </article>
-          <article>
-            <span class="command-label">Entries</span>
-            <p>Each data row stores one-based coordinates followed by a value.</p>
-          </article>
-          <article>
-            <span class="command-label">To document</span>
-            <p>Metadata fields, precision policy, comments, and dataset provenance.</p>
-          </article>
         </div>
       </section>
 

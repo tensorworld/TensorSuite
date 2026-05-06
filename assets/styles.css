@@ -341,6 +341,29 @@ code {
   border-top: 1px solid var(--line);
 }
 
+.format-stack {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.format-group {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.format-group-heading h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.format-group-heading p:last-child {
+  margin-bottom: 0;
+}
+
 .format-notes {
   display: grid;
   gap: 1rem;
@@ -353,6 +376,59 @@ code {
 
 .format-notes p {
   margin-bottom: 0;
+}
+
+.format-example {
+  grid-column: 1 / -1;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1.4rem;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #182525;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.format-example code {
+  color: #e9fff9;
+}
+
+.attribute-table-wrap {
+  overflow-x: auto;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.attribute-table {
+  width: 100%;
+  min-width: 46rem;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+
+.attribute-table th,
+.attribute-table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.attribute-table th {
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.attribute-table td {
+  color: var(--muted);
+}
+
+.attribute-table tr:last-child td {
+  border-bottom: 0;
 }
 
 .related-grid .resource-card {
@@ -420,6 +496,7 @@ code {
 
   .split,
   .format,
+  .format-group,
   .resource-grid {
     grid-template-columns: 1fr;
   }
