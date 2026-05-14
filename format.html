@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="TensorSuite collects real-world dense and sparse tensors exhibiting element-wise and block-wise patterns, and also generates representative synthetic tensors to enable benchmarking under configurable size, density, and memory constraints."
+    >
+    <title>Format | TensorSuite</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary navigation">
+      <div class="site-header-inner">
+        <a class="brand" href="./" aria-label="TensorSuite home">
+          <span class="brand-mark" aria-hidden="true">TS</span>
+          <span>TensorSuite</span>
+        </a>
+        <nav class="nav-links" aria-label="Project links">
+          <a class="active" href="format.html">Format</a>
+          <a href="real.html">Real</a>
+          <a href="synthetic.html">Synthetic</a>
+          <a href="related.html">Related</a>
+          <a href="contributors.html">Contributors</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="content-section format first-section" id="format">
+        <div>
+          <p class="section-kicker">Output Format</p>
+          <h2>Tensor bundles with canonical JSON metadata.</h2>
+          <p>
+            TensorSuite stores each tensor as a folder. The
+            <code>*_metadata.json</code> file is the canonical schema for tensor
+            attributes and metadata; <code>.tns</code> and <code>.tnsb</code>
+            are data representations inside the bundle.
+          </p>
+        </div>
+        <div class="format-stack" aria-label="Format documentation outline">
+          <section class="format-group" aria-labelledby="bundle-layout-title">
+            <div class="format-group-heading">
+              <p class="command-label">Bundle Layout</p>
+              <h3 id="bundle-layout-title">One folder per tensor record.</h3>
+              <p>
+                A bundle includes a tensor-name metadata file, data files, a
+                README, and potentially additional files the dataset needs.
+              </p>
+            </div>
+            <div class="format-notes">
+              <article>
+                <span class="command-label">Named Files</span>
+                <p>
+                  A tensor-name folder uses matching file prefixes, such as
+                  <code>example-tensor_metadata.json</code>,
+                  <code>example-tensor.tns</code>, and
+                  <code>example-tensor.tnsb</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Metadata</span>
+                <p>
+                  <code>*_metadata.json</code> records identity, attributes,
+                  tensor size information, and file mappings for the tensor
+                  folder.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Text Tensor</span>
+                <p>
+                  <code>.tns</code> stores coordinate-based tensor entries in a
+                  readable text format for inspection.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Binary Tensor</span>
+                <p>
+                  <code>.tnsb</code> stores coordinate-based tensor entries in
+                  binary form for faster loading. Large bundles may provide only
+                  <code>.tnsb</code> as the tensor data file, with no
+                  <code>.tns</code> file.
+                </p>
+              </article>
+            </div>
+          </section>
+          <div class="bundle-example-grid" aria-label="TensorSuite bundle examples">
+            <pre class="format-example bundle-example" aria-label="TensorSuite full bundle example"><code>example-tensor/
+  example-tensor_metadata.json
+  example-tensor.tns
+  example-tensor.tnsb
+  README.md</code></pre>
+            <pre class="format-example bundle-example" aria-label="TensorSuite binary-only bundle example"><code>large-tensor/
+  large-tensor_metadata.json
+  large-tensor.tnsb
+  README.md</code></pre>
+          </div>
+          <section class="format-group" aria-labelledby="tns-format-title">
+            <div class="format-group-heading">
+              <p class="command-label">Tensor Data Files</p>
+              <h3 id="tns-format-title">Coordinate data in text and binary files.</h3>
+              <p>
+                The text file keeps a minimal cross-check header, one size
+                line, and coordinate entries. Full attributes and metadata stay
+                in the bundle metadata JSON.
+              </p>
+            </div>
+            <div class="format-notes">
+              <article>
+                <span class="command-label">Minimal Header</span>
+                <p>
+                  The first line is <code>%%TensorSuite-TNS</code>. Then
+                  <code>% version</code> and <code>% name</code> let readers
+                  cross-check the file against the metadata JSON.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Size Line</span>
+                <p>
+                  One line gives the tensor order, all mode dimensions, and NNZ
+                  so readers can preallocate memory and validate the entry
+                  count.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Entries</span>
+                <p>
+                  Each data row stores one-based or zero-based coordinates
+                  followed by a non-zero value.
+                </p>
+              </article>
+            </div>
+          </section>
+          <div class="tensor-example-grid" aria-label="TensorSuite tensor data examples">
+            <pre class="format-example" aria-label="TensorSuite tns format example"><code>%%TensorSuite-TNS
+% version: 1.0
+% name: example-tensor
+3 4 3 2 5
+1 1 1 1.0000000000000000
+1 2 1 2.5000000000000000
+2 2 1 -1.2500000000000000
+3 1 2 4.0000000000000000
+4 3 2 0.5000000000000000</code></pre>
+            <pre class="format-example" aria-label="TensorSuite tnsb format example"><code>%%TensorSuite-TNSB
+% version: 1.0
+% name: example-tensor
+3 4 3 2 5
+[binary coordinate/value records begin here]</code></pre>
+          </div>
+          <section class="format-group" aria-labelledby="attribute-values-title">
+            <div class="format-group-heading">
+              <p class="command-label">Metadata Information</p>
+              <h3 id="attribute-values-title">Metadata .json file description.</h3>
+              <p>
+                The JSON file stays comment-free; attribute meanings and
+                allowed values are documented below. Auxiliary data can be
+                documented in <code>README.md</code>.
+              </p>
+            </div>
+            <div class="metadata-information-grid">
+              <pre class="format-example" aria-label="TensorSuite metadata JSON example"><code>{
+  "version": "1.0",
+  "name": "example-tensor",
+  "group": "TensorSuite-example",
+  "id": "example-000001",
+  "time": "2026-05-06",
+  "source": "generated",
+  "source_url": "",
+  "value_type": "float64",
+  "value_domain": "general",
+  "index_type": "uint64",
+  "index_base": 1,
+  "sorted": "lexicographic",
+  "sort_order": [1, 2, 3],
+  "duplicates": "disallowed",
+  "explicit_zeros": "allowed",
+  "pattern_symmetry": "no",
+  "numerical_symmetry": "no",
+  "sparsity_type": "element",
+  "dense_modes": [],
+  "endianness": "little",
+  "order": 3,
+  "dimensions": [4, 3, 2],
+  "nnz": 5,
+  "files": {
+    "text": "example-tensor.tns",
+    "binary": "example-tensor.tnsb",
+    "readme": "README.md"
+  }
+}</code></pre>
+              <div class="attribute-table-wrap">
+                <table class="attribute-table">
+                  <thead>
+                    <tr>
+                      <th>Attribute</th>
+                      <th>Allowed Values</th>
+                      <th>Meaning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>value_type</code></td>
+                      <td><code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code></td>
+                      <td>Numeric type used to store tensor values.</td>
+                    </tr>
+                    <tr>
+                      <td><code>value_domain</code></td>
+                      <td><code>general</code>, <code>nonnegative</code>, <code>binary</code></td>
+                      <td>Numerical value constraint. <code>nonnegative</code> means values are greater than or equal to zero; <code>binary</code> means values are restricted to <code>0</code> and <code>1</code>.</td>
+                    </tr>
+                    <tr>
+                      <td><code>index_type</code></td>
+                      <td><code>uint32</code>, <code>uint64</code></td>
+                      <td>Integer type used by binary coordinate indices.</td>
+                    </tr>
+                    <tr>
+                      <td><code>endianness</code></td>
+                      <td><code>none</code>, <code>little</code>, <code>big</code></td>
+                      <td>Byte order used by binary numeric records. Use <code>none</code> when the bundle has no binary tensor data.</td>
+                    </tr>
+                    <tr>
+                      <td><code>index_base</code></td>
+                      <td><code>0</code>, <code>1</code></td>
+                      <td>Whether coordinates are zero-based or one-based.</td>
+                    </tr>
+                    <tr>
+                      <td><code>sorted</code></td>
+                      <td><code>none</code>, <code>lexicographic</code></td>
+                      <td>Whether entries are sorted.</td>
+                    </tr>
+                    <tr>
+                      <td><code>sort_order</code></td>
+                      <td>Permutation of mode ids, such as <code>[1,2,3]</code></td>
+                      <td>Mode priority used for lexicographic sorting.</td>
+                    </tr>
+                    <tr>
+                      <td><code>duplicates</code></td>
+                      <td><code>allowed</code>, <code>disallowed</code>, <code>summed</code></td>
+                      <td>Policy for repeated coordinates.</td>
+                    </tr>
+                    <tr>
+                      <td><code>explicit_zeros</code></td>
+                      <td><code>allowed</code>, <code>disallowed</code></td>
+                      <td>Whether stored entries may have numerical value zero.</td>
+                    </tr>
+                    <tr>
+                      <td><code>pattern_symmetry</code></td>
+                      <td><code>full</code>, <code>partial</code>, <code>no</code></td>
+                      <td>Symmetry of the nonzero coordinate pattern.</td>
+                    </tr>
+                    <tr>
+                      <td><code>numerical_symmetry</code></td>
+                      <td><code>full</code>, <code>partial</code>, <code>no</code></td>
+                      <td>Symmetry of both coordinate pattern and mirrored values.</td>
+                    </tr>
+                    <tr>
+                      <td><code>sparsity_type</code></td>
+                      <td><code>no</code>, <code>semi</code>, <code>element</code>, <code>block</code></td>
+                      <td>Dense, semi-sparse, element-sparse, or block-sparse structure.</td>
+                    </tr>
+                    <tr>
+                      <td><code>dense_modes</code></td>
+                      <td>Mode-id list, such as <code>[]</code> or <code>[1,2]</code></td>
+                      <td>Modes that are dense or nearly dense.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>TensorSuite by TensorWorld</span>
+      <a href="https://github.com/tensorworld/TensorSuite-Code">github.com/tensorworld/TensorSuite-Code</a>
+    </footer>
+  </body>
+</html>
