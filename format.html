@@ -149,7 +149,7 @@
           </section>
           <div class="tensor-example-grid" aria-label="TensorSuite tensor data examples">
             <pre class="format-example" aria-label="TensorSuite tns format example"><code>%%TensorSuite-TNS
-% version: 1.0
+% version: 0.1
 % name: example-tensor
 3 4 3 2 5
 1 1 1 1.0000000000000000
@@ -158,7 +158,7 @@
 3 1 2 4.0000000000000000
 4 3 2 0.5000000000000000</code></pre>
             <pre class="format-example" aria-label="TensorSuite tnsb format example"><code>%%TensorSuite-TNSB
-% version: 1.0
+% version: 0.1
 % name: example-tensor
 3 4 3 2 5
 [binary coordinate/value records begin here]</code></pre>
@@ -175,7 +175,7 @@
             </div>
             <div class="metadata-information-grid">
               <pre class="format-example metadata-json-example" aria-label="TensorSuite metadata JSON example"><code>{
-  "version": "1.0",
+  "version": "0.1",
   "name": "example-tensor",
   "group": "TensorSuite-example",
   "id": "0001",
@@ -198,7 +198,6 @@
   "order": 3,
   "dimensions": [4, 3, 2],
   "nnz": 5,
-  "nnz_block": null,
   "files": {
     "text": "example-tensor.tns",
     "binary": "example-tensor.tnsb",
@@ -301,7 +300,9 @@
                 recommended text suffix is <code>.btns</code>, and the
                 recommended binary suffix is <code>.btnsb</code>, so
                 block-wise files are distinct from element-wise
-                <code>.tns</code> and <code>.tnsb</code> files.
+                <code>.tns</code> and <code>.tnsb</code> files. Use
+                <code>.btnsb</code> directly for binary block-wise files instead
+                of a double suffix such as <code>.btns.bin</code>.
               </p>
             </div>
             <div class="format-notes block-format-notes">
@@ -332,7 +333,7 @@
               </article>
             </div>
             <pre class="format-example metadata-json-example" aria-label="TensorSuite block-wise metadata JSON example"><code>{
-  "version": "1.0",
+  "version": "0.1",
   "name": "block-example",
   "group": "TensorSuite-example",
   "id": "0002",
@@ -355,8 +356,8 @@
   "order": 3,
   "dimensions": [2000, 2000, 20],
   "nnz": 768000,
+  "block_dimensions": [110, 110, 19],
   "nnz_block": 1200,
-  "block_grid_dimensions": [110, 110, 19],
   "files": {
     "text": "block-example.btns",
     "binary": "block-example.btnsb",
@@ -364,7 +365,7 @@
   }
 }</code></pre>
             <pre class="format-example metadata-json-example" aria-label="TensorSuite btns format example"><code>%%TensorSuite-BTNS
-% version: 1.0
+% version: 0.1
 % name: block-example
 3 2000 2000 20 768000
 3 110 110 19 1200
