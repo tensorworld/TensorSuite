@@ -18,7 +18,13 @@
           <span>TensorSuite</span>
         </a>
         <nav class="nav-links" aria-label="Project links">
-          <a class="active" href="format.html">Format</a>
+          <div class="nav-dropdown">
+            <a class="active" href="format.html">Format</a>
+            <div class="dropdown-menu" aria-label="Format sections">
+              <a href="format.html#element-wise">Element-wise</a>
+              <a href="format.html#block-wise">Block-wise</a>
+            </div>
+          </div>
           <a href="real.html">Real</a>
           <a href="synthetic.html">Synthetic</a>
           <a href="related.html">Related</a>
@@ -40,6 +46,15 @@
           </p>
         </div>
         <div class="format-stack" aria-label="Format documentation outline">
+          <section class="format-mode-section" id="element-wise" aria-labelledby="element-wise-format-title">
+            <div class="format-mode-heading">
+              <p class="section-kicker">Element-wise</p>
+              <h3 id="element-wise-format-title">Element-wise tensor format.</h3>
+              <p>
+                Element-wise tensors store each non-zero entry as explicit
+                coordinates followed by one value.
+              </p>
+            </div>
           <section class="format-group" aria-labelledby="bundle-layout-title">
             <div class="format-group-heading">
               <p class="command-label">Bundle Layout</p>
@@ -148,7 +163,7 @@
 3 4 3 2 5
 [binary coordinate/value records begin here]</code></pre>
           </div>
-          <section class="format-group" aria-labelledby="attribute-values-title">
+          <section class="format-group metadata-section" aria-labelledby="attribute-values-title">
             <div class="format-group-heading">
               <p class="command-label">Metadata Information</p>
               <h3 id="attribute-values-title">Metadata .json file description.</h3>
@@ -159,11 +174,11 @@
               </p>
             </div>
             <div class="metadata-information-grid">
-              <pre class="format-example" aria-label="TensorSuite metadata JSON example"><code>{
+              <pre class="format-example metadata-json-example" aria-label="TensorSuite metadata JSON example"><code>{
   "version": "1.0",
   "name": "example-tensor",
   "group": "TensorSuite-example",
-  "id": "example-000001",
+  "id": "0001",
   "time": "2026-05-06",
   "source": "generated",
   "source_url": "",
@@ -183,6 +198,7 @@
   "order": 3,
   "dimensions": [4, 3, 2],
   "nnz": 5,
+  "nnz_block": null,
   "files": {
     "text": "example-tensor.tns",
     "binary": "example-tensor.tnsb",
@@ -264,10 +280,101 @@
                       <td>Mode-id list, such as <code>[]</code> or <code>[1,2]</code></td>
                       <td>Modes that are dense or nearly dense.</td>
                     </tr>
+                    <tr>
+                      <td><code>nnz_block</code></td>
+                      <td>Nonnegative integer, or <code>null</code></td>
+                      <td>Number of nonzero blocks. Use <code>null</code> for tensors without block-sparse structure.</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+          </section>
+          </section>
+          <section class="format-mode-section" id="block-wise" aria-labelledby="block-wise-format-title">
+            <div class="format-mode-heading">
+              <p class="section-kicker">Block-wise</p>
+              <h3 id="block-wise-format-title">Block-wise tensor format.</h3>
+              <p>
+                Block-wise tensors use the same TensorSuite folder structure,
+                metadata JSON, and coordinate-oriented data model. The
+                recommended text suffix is <code>.btns</code>, and the
+                recommended binary suffix is <code>.btnsb</code>, so
+                block-wise files are distinct from element-wise
+                <code>.tns</code> and <code>.tnsb</code> files.
+              </p>
+            </div>
+            <div class="format-notes block-format-notes">
+              <article>
+                <span class="command-label">Block Header</span>
+                <p>
+                  Keep one line for the full tensor:
+                  <code>3 2000 2000 20 nnz</code>, followed by one line for the
+                  block grid: <code>3 110 110 19 nnz_block</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Block Sizes</span>
+                <p>
+                  After the two size lines, write one block-size array per
+                  mode. For a <code>110 x 110 x 19</code> block grid, the three
+                  arrays have lengths <code>110</code>, <code>110</code>, and
+                  <code>19</code>.
+                </p>
+              </article>
+              <article>
+                <span class="command-label">Implicit Values</span>
+                <p>
+                  If a tensor has dense modes or block-sparse structure, the
+                  data file may omit values. Users can fill values according to
+                  metadata constraints and any README notes.
+                </p>
+              </article>
+            </div>
+            <pre class="format-example metadata-json-example" aria-label="TensorSuite block-wise metadata JSON example"><code>{
+  "version": "1.0",
+  "name": "block-example",
+  "group": "TensorSuite-example",
+  "id": "0002",
+  "time": "2026-05-06",
+  "source": "generated",
+  "source_url": "",
+  "value_type": "float64",
+  "value_domain": "nonnegative",
+  "index_type": "uint64",
+  "index_base": 1,
+  "sorted": "lexicographic",
+  "sort_order": [1, 2, 3],
+  "duplicates": "disallowed",
+  "explicit_zeros": "disallowed",
+  "pattern_symmetry": "no",
+  "numerical_symmetry": "no",
+  "sparsity_type": "block",
+  "dense_modes": [],
+  "endianness": "little",
+  "order": 3,
+  "dimensions": [2000, 2000, 20],
+  "nnz": 768000,
+  "nnz_block": 1200,
+  "block_grid_dimensions": [110, 110, 19],
+  "files": {
+    "text": "block-example.btns",
+    "binary": "block-example.btnsb",
+    "readme": "README.md"
+  }
+}</code></pre>
+            <pre class="format-example metadata-json-example" aria-label="TensorSuite btns format example"><code>%%TensorSuite-BTNS
+% version: 1.0
+% name: block-example
+3 2000 2000 20 768000
+3 110 110 19 1200
+18 18 18 ... 20
+18 18 18 ... 20
+1 1 1 ... 2
+1 1 1
+4 7 2
+9 2 3
+[remaining nonzero block coordinates]</code></pre>
           </section>
         </div>
       </section>

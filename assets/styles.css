@@ -85,6 +85,12 @@ a {
   font-weight: 700;
 }
 
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .nav-links a {
   text-decoration: none;
 }
@@ -95,6 +101,36 @@ a {
 
 .nav-links a.active {
   color: var(--ink);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: 50%;
+  display: none;
+  min-width: 11rem;
+  padding: 0.55rem;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--ink);
+  transform: translateX(-50%);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.45rem 0.65rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+  color: var(--teal);
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
+  display: block;
 }
 
 .hero {
@@ -356,6 +392,28 @@ code {
   gap: 1.25rem;
 }
 
+.format-mode-section {
+  display: grid;
+  gap: 1.25rem;
+  scroll-margin-top: 5.5rem;
+}
+
+.format-mode-section + .format-mode-section {
+  margin-top: 2rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.format-mode-heading {
+  max-width: 48rem;
+}
+
+.format-mode-heading h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.55rem;
+  line-height: 1.2;
+}
+
 .format-group {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr);
@@ -424,12 +482,30 @@ code {
 
 .metadata-information-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
   gap: 1.25rem;
 }
 
 .metadata-information-grid .format-example {
   grid-column: auto;
+}
+
+.metadata-json-example {
+  overflow-x: visible;
+  white-space: pre-wrap;
+}
+
+.metadata-json-example code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.metadata-section {
+  grid-template-columns: 1fr;
+}
+
+.metadata-section .format-group-heading {
+  max-width: 48rem;
 }
 
 .attribute-table-wrap {
@@ -518,6 +594,11 @@ code {
     justify-content: flex-start;
     gap: 0.55rem 0.9rem;
     font-size: 0.82rem;
+  }
+
+  .dropdown-menu {
+    left: 0;
+    transform: none;
   }
 
   .hero {
