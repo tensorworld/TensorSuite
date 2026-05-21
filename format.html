@@ -101,15 +101,21 @@
             </div>
           </section>
           <div class="bundle-example-grid" aria-label="TensorSuite bundle examples">
-            <pre class="format-example bundle-example" aria-label="TensorSuite full bundle example"><code>example-tensor/
+            <div class="example-block">
+              <p class="example-caption">Example element-wise tensor bundle</p>
+              <pre class="format-example bundle-example" aria-label="TensorSuite full bundle example"><code>example-tensor/
   example-tensor_metadata.json
   example-tensor.tns
   example-tensor.tnsb
   README.md</code></pre>
-            <pre class="format-example bundle-example" aria-label="TensorSuite binary-only bundle example"><code>large-tensor/
+            </div>
+            <div class="example-block">
+              <p class="example-caption">Example binary-only tensor bundle</p>
+              <pre class="format-example bundle-example" aria-label="TensorSuite binary-only bundle example"><code>large-tensor/
   large-tensor_metadata.json
   large-tensor.tnsb
   README.md</code></pre>
+            </div>
           </div>
           <section class="format-group" aria-labelledby="tns-format-title">
             <div class="format-group-heading">
@@ -148,7 +154,9 @@
             </div>
           </section>
           <div class="tensor-example-grid" aria-label="TensorSuite tensor data examples">
-            <pre class="format-example" aria-label="TensorSuite tns format example"><code>%%TensorSuite-TNS
+            <div class="example-block">
+              <p class="example-caption">Example element-wise text tensor file</p>
+              <pre class="format-example" aria-label="TensorSuite tns format example"><code>%%TensorSuite-TNS
 % version: 0.1
 % name: example-tensor
 3 4 3 2 5
@@ -157,11 +165,15 @@
 2 2 1 -1.2500000000000000
 3 1 2 4.0000000000000000
 4 3 2 0.5000000000000000</code></pre>
-            <pre class="format-example" aria-label="TensorSuite tnsb format example"><code>%%TensorSuite-TNSB
+            </div>
+            <div class="example-block">
+              <p class="example-caption">Example element-wise binary tensor file</p>
+              <pre class="format-example" aria-label="TensorSuite tnsb format example"><code>%%TensorSuite-TNSB
 % version: 0.1
 % name: example-tensor
 3 4 3 2 5
 [binary coordinate/value records begin here]</code></pre>
+            </div>
           </div>
           <section class="format-group metadata-section" aria-labelledby="attribute-values-title">
             <div class="format-group-heading">
@@ -174,16 +186,20 @@
               </p>
             </div>
             <div class="metadata-information-grid">
-              <pre class="format-example metadata-json-example" aria-label="TensorSuite metadata JSON example"><code>{
+              <div class="example-block">
+                <p class="example-caption">Example element-wise metadata JSON file</p>
+                <pre class="format-example metadata-json-example" aria-label="TensorSuite metadata JSON example"><code>{
   "version": "0.1",
   "name": "example-tensor",
   "group": "TensorSuite-example",
   "id": "0001",
   "time": "2026-05-06",
-  "source": "generated",
+  "source_type": "synthetic",
+  "source": "Generated element-wise tensor for format illustration.",
   "source_url": "",
   "value_type": "float64",
   "value_domain": "general",
+  "values_provided": true,
   "index_type": "uint64",
   "index_base": 1,
   "sorted": "lexicographic",
@@ -198,12 +214,15 @@
   "order": 3,
   "dimensions": [4, 3, 2],
   "nnz": 5,
+  "block_partitions": null,
+  "nnz_block": null,
   "files": {
     "text": "example-tensor.tns",
     "binary": "example-tensor.tnsb",
     "readme": "README.md"
   }
 }</code></pre>
+              </div>
               <div class="attribute-table-wrap">
                 <table class="attribute-table">
                   <thead>
@@ -214,6 +233,41 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr>
+                      <td><code>name</code></td>
+                      <td>String</td>
+                      <td>Human-readable tensor name. The value should match the bundle file prefix.</td>
+                    </tr>
+                    <tr>
+                      <td><code>group</code></td>
+                      <td>String</td>
+                      <td>Dataset family or tensor collection group.</td>
+                    </tr>
+                    <tr>
+                      <td><code>id</code></td>
+                      <td>Four-digit string, such as <code>0001</code></td>
+                      <td>Short stable tensor identifier within TensorSuite.</td>
+                    </tr>
+                    <tr>
+                      <td><code>time</code></td>
+                      <td>ISO date string, such as <code>2026-05-06</code></td>
+                      <td>Date associated with the tensor record or release.</td>
+                    </tr>
+                    <tr>
+                      <td><code>source_type</code></td>
+                      <td><code>synthetic</code>, <code>real</code></td>
+                      <td>Whether the tensor is generated or collected from a real application.</td>
+                    </tr>
+                    <tr>
+                      <td><code>source</code></td>
+                      <td>String</td>
+                      <td>Application, method, generator, or provenance description. This can be a longer free-form string.</td>
+                    </tr>
+                    <tr>
+                      <td><code>source_url</code></td>
+                      <td>URL string, or empty string</td>
+                      <td>External source link when available.</td>
+                    </tr>
                     <tr>
                       <td><code>value_type</code></td>
                       <td><code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code></td>
@@ -280,9 +334,19 @@
                       <td>Modes that are dense or nearly dense.</td>
                     </tr>
                     <tr>
+                      <td><code>block_partitions</code></td>
+                      <td>Mode-size list, such as <code>[110,110,19]</code>, or <code>null</code></td>
+                      <td>Number of block partitions in each tensor mode. Use <code>null</code> for tensors without block-sparse structure.</td>
+                    </tr>
+                    <tr>
                       <td><code>nnz_block</code></td>
                       <td>Nonnegative integer, or <code>null</code></td>
                       <td>Number of nonzero blocks. Use <code>null</code> for tensors without block-sparse structure.</td>
+                    </tr>
+                    <tr>
+                      <td><code>values_provided</code></td>
+                      <td><code>true</code>, <code>false</code></td>
+                      <td>Whether the tensor data file explicitly stores nonzero values. If <code>false</code>, values may be generated by users under metadata and README constraints.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -311,7 +375,7 @@
                 <p>
                   Keep one line for the full tensor:
                   <code>3 2000 2000 20 nnz</code>, followed by one line for the
-                  block grid: <code>3 110 110 19 nnz_block</code>.
+                  block grid: <code>110 110 19 nnz_block</code>.
                 </p>
               </article>
               <article>
@@ -332,16 +396,20 @@
                 </p>
               </article>
             </div>
-            <pre class="format-example metadata-json-example" aria-label="TensorSuite block-wise metadata JSON example"><code>{
+            <div class="example-block">
+              <p class="example-caption">Example block-sparse metadata JSON file</p>
+              <pre class="format-example metadata-json-example" aria-label="TensorSuite block-wise metadata JSON example"><code>{
   "version": "0.1",
   "name": "block-example",
   "group": "TensorSuite-example",
   "id": "0002",
   "time": "2026-05-06",
-  "source": "generated",
+  "source_type": "synthetic",
+  "source": "Generated block-sparse tensor for format illustration.",
   "source_url": "",
   "value_type": "float64",
   "value_domain": "nonnegative",
+  "values_provided": false,
   "index_type": "uint64",
   "index_base": 1,
   "sorted": "lexicographic",
@@ -356,7 +424,7 @@
   "order": 3,
   "dimensions": [2000, 2000, 20],
   "nnz": 768000,
-  "block_dimensions": [110, 110, 19],
+  "block_partitions": [110, 110, 19],
   "nnz_block": 1200,
   "files": {
     "text": "block-example.btns",
@@ -364,11 +432,14 @@
     "readme": "README.md"
   }
 }</code></pre>
-            <pre class="format-example metadata-json-example" aria-label="TensorSuite btns format example"><code>%%TensorSuite-BTNS
+            </div>
+            <div class="example-block">
+              <p class="example-caption">Example block-sparse tensor file</p>
+              <pre class="format-example metadata-json-example" aria-label="TensorSuite btns format example"><code>%%TensorSuite-BTNS
 % version: 0.1
 % name: block-example
 3 2000 2000 20 768000
-3 110 110 19 1200
+110 110 19 1200
 18 18 18 ... 20
 18 18 18 ... 20
 1 1 1 ... 2
@@ -376,6 +447,7 @@
 4 7 2
 9 2 3
 [remaining nonzero block coordinates]</code></pre>
+            </div>
           </section>
         </div>
       </section>
