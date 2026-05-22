@@ -332,6 +332,20 @@ code {
   padding: 1.5rem;
 }
 
+.resource-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.resource-card-link:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
 .resource-card:nth-child(4n + 1) {
   border-top: 8px solid var(--teal);
 }
