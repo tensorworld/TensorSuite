@@ -422,6 +422,10 @@ code {
   max-width: 48rem;
 }
 
+#metadata-json-file .format-mode-heading {
+  max-width: none;
+}
+
 .format-mode-heading h3 {
   margin: 0 0 0.65rem;
   font-size: 1.55rem;
@@ -457,6 +461,20 @@ code {
 
 .format-notes p {
   margin-bottom: 0;
+}
+
+.bundle-layout-group .format-notes {
+  grid-template-columns: repeat(2, minmax(0, 14rem));
+  max-width: 29rem;
+}
+
+.bundle-layout-group .format-notes article {
+  min-height: 8rem;
+}
+
+.bundle-layout-group .format-notes p,
+.bundle-layout-group .format-notes code {
+  overflow-wrap: anywhere;
 }
 
 .format-example {
@@ -512,8 +530,9 @@ code {
 
 .metadata-information-grid {
   display: grid;
-  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
+  margin-top: 1.25rem;
 }
 
 .metadata-information-grid .format-example {
@@ -655,6 +674,7 @@ code {
   .split,
   .format,
   .format-group,
+  .bundle-layout-group .format-notes,
   .bundle-example-grid,
   .tensor-example-grid,
   .metadata-information-grid,
