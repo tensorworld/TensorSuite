@@ -262,7 +262,7 @@
                 <tbody>
                   <tr>
                     <td><code>version</code></td>
-                    <td>Version string, <code>0.1</code> for this release</td>
+                    <td>String, <code>0.1</code> for this release</td>
                     <td>It should match the version recorded in the tensor data file.</td>
                   </tr>
                   <tr>
@@ -273,17 +273,17 @@
                   <tr>
                     <td><code>group</code></td>
                     <td>String</td>
-                    <td>Dataset family or tensor collection group.</td>
+                    <td>Dataset family or category grouping tensors from the same application or scenario.</td>
                   </tr>
                   <tr>
                     <td><code>id</code></td>
-                    <td>Four-digit string, such as <code>0001</code></td>
-                    <td>Short stable tensor identifier within TensorSuite.</td>
+                    <td>Four-digit number, e.g., <code>0001</code></td>
+                    <td>Short tensor identifier within TensorSuite.</td>
                   </tr>
                   <tr>
                     <td><code>time</code></td>
-                    <td>ISO date string, such as <code>2026-05-06</code></td>
-                    <td>Date associated with the tensor record or release.</td>
+                    <td>ISO date string, e.g., <code>2026-05-06</code></td>
+                    <td>Date associated with the tensor record.</td>
                   </tr>
                   <tr>
                     <td><code>source_type</code></td>
@@ -297,7 +297,7 @@
                   </tr>
                   <tr>
                     <td><code>source_url</code></td>
-                    <td>URL string, or empty string</td>
+                    <td>URL or empty string</td>
                     <td>External source link when available.</td>
                   </tr>
                   <tr>
@@ -308,7 +308,7 @@
                   <tr>
                     <td><code>value_domain</code></td>
                     <td><code>general</code>, <code>nonnegative</code>, <code>binary</code></td>
-                    <td>Numerical value constraint. <code>nonnegative</code> means values are greater than or equal to zero; <code>binary</code> means values are restricted to <code>0</code> and <code>1</code>.</td>
+                    <td>Numerical value constraint. <code>nonnegative</code> means all values are greater than or equal to zero; <code>binary</code> means values are restricted to <code>0</code> and <code>1</code>.</td>
                   </tr>
                   <tr>
                     <td><code>values_provided</code></td>
@@ -318,12 +318,12 @@
                   <tr>
                     <td><code>index_type</code></td>
                     <td><code>uint32</code>, <code>uint64</code></td>
-                    <td>Integer type used by binary coordinate indices.</td>
+                    <td>Integer type used by coordinate indices.</td>
                   </tr>
                   <tr>
                     <td><code>endianness</code></td>
                     <td><code>none</code>, <code>little</code>, <code>big</code></td>
-                    <td>Byte order used by binary numeric records. Use <code>none</code> when the bundle has no binary tensor data.</td>
+                    <td>Byte order used by <code>.tnsb</code> tensor files. Use <code>none</code> when the bundle has no binary tensor file.</td>
                   </tr>
                   <tr>
                     <td><code>index_base</code></td>
@@ -429,7 +429,7 @@
   "group": "TensorSuite-example",
   "id": "0002",
   "time": "2026-05-06",
-  "source_type": "synthetic",
+  "source_type": "real",
   "source": "Generated block-sparse tensor for format illustration.",
   "source_url": "",
   "value_type": "float64",

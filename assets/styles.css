@@ -591,6 +591,19 @@ code {
   color: var(--muted);
 }
 
+.attribute-table th:first-child,
+.attribute-table td:first-child {
+  white-space: nowrap;
+}
+
+.attribute-table th:nth-child(2),
+.attribute-table td:nth-child(2),
+.attribute-table th:nth-child(3),
+.attribute-table td:nth-child(3) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .attribute-table tr:last-child td {
   border-bottom: 0;
 }
