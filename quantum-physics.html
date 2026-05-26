@@ -39,13 +39,343 @@
         <div class="section-heading">
           <p class="section-kicker">Real Tensor</p>
           <h2>Quantum Physics</h2>
-          <p>Physics simulation tensors and structured operator data.</p>
+          <p>
+            This TensorSuite collection includes block-sparse tensors from
+            density matrix renormalization group (DMRG) workloads, where tensor
+            contractions naturally expose structured sparsity patterns [1],
+            [2].
+          </p>
+          <p>
+            The tensors are generated from a 2D Hubbard model with a 6 x 3
+            lattice, 18 sites, and bond dimension up to 1600 using ITensors.jl
+            [3]. From the two-site DMRG update workflow, we include five
+            representative contraction systems: E1, E2, S1, S2, and S3. 
+            The collection covers four symmetry regimes: kysznf, sznf, nf, and
+            nfparity.
+          </p>
+          <p>
+            For each contraction, TensorSuite lists both the canonical tensor
+            layout and an internal permuted layout. The canonical layout follows
+            the DMRG-generated index order, while the permuted layout groups
+            contracted indices to expose larger block operations, a common
+            strategy for improving tensor contraction performance on modern
+            hardware [3], [4], [5].
+          </p>
         </div>
-        <div class="resource-grid">
-          <article class="resource-card">
-            <h3>Tensor Links</h3>
-            <p>Dataset links and tensor metadata will be added here.</p>
-          </article>
+        <div class="tensor-pair-section">
+          <h3>Tensor Pairs</h3>
+          <p>
+            Each contraction system contains a tensor A and tensor B pair. The
+            pairs are grouped by layout so links can be attached separately for
+            the canonical formulation and the internal permuted layout.
+          </p>
+          <section class="tensor-pair-layout-section" aria-labelledby="canonical-formulation-title">
+            <h4 id="canonical-formulation-title">Canonical Formulation</h4>
+            <div class="tensor-pair-table-wrap">
+              <table class="tensor-pair-table">
+                <thead>
+                  <tr>
+                    <th>Symmetry</th>
+                    <th>System</th>
+                    <th>Tensor A</th>
+                    <th>Tensor B</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>kysznf</td>
+                  <td>E1</td>
+                  <td><code>canonical_formulation_kysznf_E1_A</code></td>
+                  <td><code>canonical_formulation_kysznf_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>E2</td>
+                  <td><code>canonical_formulation_kysznf_E2_A</code></td>
+                  <td><code>canonical_formulation_kysznf_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>S1</td>
+                  <td><code>canonical_formulation_kysznf_S1_A</code></td>
+                  <td><code>canonical_formulation_kysznf_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>S2</td>
+                  <td><code>canonical_formulation_kysznf_S2_A</code></td>
+                  <td><code>canonical_formulation_kysznf_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>S3</td>
+                  <td><code>canonical_formulation_kysznf_S3_A</code></td>
+                  <td><code>canonical_formulation_kysznf_S3_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>E1</td>
+                  <td><code>canonical_formulation_sznf_E1_A</code></td>
+                  <td><code>canonical_formulation_sznf_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>E2</td>
+                  <td><code>canonical_formulation_sznf_E2_A</code></td>
+                  <td><code>canonical_formulation_sznf_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>S1</td>
+                  <td><code>canonical_formulation_sznf_S1_A</code></td>
+                  <td><code>canonical_formulation_sznf_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>S2</td>
+                  <td><code>canonical_formulation_sznf_S2_A</code></td>
+                  <td><code>canonical_formulation_sznf_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>S3</td>
+                  <td><code>canonical_formulation_sznf_S3_A</code></td>
+                  <td><code>canonical_formulation_sznf_S3_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>E1</td>
+                  <td><code>canonical_formulation_nf_E1_A</code></td>
+                  <td><code>canonical_formulation_nf_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>E2</td>
+                  <td><code>canonical_formulation_nf_E2_A</code></td>
+                  <td><code>canonical_formulation_nf_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>S1</td>
+                  <td><code>canonical_formulation_nf_S1_A</code></td>
+                  <td><code>canonical_formulation_nf_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>S2</td>
+                  <td><code>canonical_formulation_nf_S2_A</code></td>
+                  <td><code>canonical_formulation_nf_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>S3</td>
+                  <td><code>canonical_formulation_nf_S3_A</code></td>
+                  <td><code>canonical_formulation_nf_S3_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>E1</td>
+                  <td><code>canonical_formulation_nfparity_E1_A</code></td>
+                  <td><code>canonical_formulation_nfparity_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>E2</td>
+                  <td><code>canonical_formulation_nfparity_E2_A</code></td>
+                  <td><code>canonical_formulation_nfparity_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>S1</td>
+                  <td><code>canonical_formulation_nfparity_S1_A</code></td>
+                  <td><code>canonical_formulation_nfparity_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>S2</td>
+                  <td><code>canonical_formulation_nfparity_S2_A</code></td>
+                  <td><code>canonical_formulation_nfparity_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>S3</td>
+                  <td><code>canonical_formulation_nfparity_S3_A</code></td>
+                  <td><code>canonical_formulation_nfparity_S3_B</code></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section class="tensor-pair-layout-section" aria-labelledby="internal-permuted-layout-title">
+            <h4 id="internal-permuted-layout-title">Internal Permuted Layout</h4>
+            <div class="tensor-pair-table-wrap">
+              <table class="tensor-pair-table">
+                <thead>
+                  <tr>
+                    <th>Symmetry</th>
+                    <th>System</th>
+                    <th>Tensor A</th>
+                    <th>Tensor B</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>kysznf</td>
+                  <td>E1</td>
+                  <td><code>block_permuted_internal_only_kysznf_E1_A</code></td>
+                  <td><code>block_permuted_internal_only_kysznf_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>E2</td>
+                  <td><code>block_permuted_internal_only_kysznf_E2_A</code></td>
+                  <td><code>block_permuted_internal_only_kysznf_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>S1</td>
+                  <td><code>block_permuted_internal_only_kysznf_S1_A</code></td>
+                  <td><code>block_permuted_internal_only_kysznf_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>S2</td>
+                  <td><code>block_permuted_internal_only_kysznf_S2_A</code></td>
+                  <td><code>block_permuted_internal_only_kysznf_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>kysznf</td>
+                  <td>S3</td>
+                  <td><code>block_permuted_internal_only_kysznf_S3_A</code></td>
+                  <td><code>block_permuted_internal_only_kysznf_S3_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>E1</td>
+                  <td><code>block_permuted_internal_only_sznf_E1_A</code></td>
+                  <td><code>block_permuted_internal_only_sznf_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>E2</td>
+                  <td><code>block_permuted_internal_only_sznf_E2_A</code></td>
+                  <td><code>block_permuted_internal_only_sznf_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>S1</td>
+                  <td><code>block_permuted_internal_only_sznf_S1_A</code></td>
+                  <td><code>block_permuted_internal_only_sznf_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>S2</td>
+                  <td><code>block_permuted_internal_only_sznf_S2_A</code></td>
+                  <td><code>block_permuted_internal_only_sznf_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>sznf</td>
+                  <td>S3</td>
+                  <td><code>block_permuted_internal_only_sznf_S3_A</code></td>
+                  <td><code>block_permuted_internal_only_sznf_S3_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>E1</td>
+                  <td><code>block_permuted_internal_only_nf_E1_A</code></td>
+                  <td><code>block_permuted_internal_only_nf_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>E2</td>
+                  <td><code>block_permuted_internal_only_nf_E2_A</code></td>
+                  <td><code>block_permuted_internal_only_nf_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>S1</td>
+                  <td><code>block_permuted_internal_only_nf_S1_A</code></td>
+                  <td><code>block_permuted_internal_only_nf_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>S2</td>
+                  <td><code>block_permuted_internal_only_nf_S2_A</code></td>
+                  <td><code>block_permuted_internal_only_nf_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nf</td>
+                  <td>S3</td>
+                  <td><code>block_permuted_internal_only_nf_S3_A</code></td>
+                  <td><code>block_permuted_internal_only_nf_S3_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>E1</td>
+                  <td><code>block_permuted_internal_only_nfparity_E1_A</code></td>
+                  <td><code>block_permuted_internal_only_nfparity_E1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>E2</td>
+                  <td><code>block_permuted_internal_only_nfparity_E2_A</code></td>
+                  <td><code>block_permuted_internal_only_nfparity_E2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>S1</td>
+                  <td><code>block_permuted_internal_only_nfparity_S1_A</code></td>
+                  <td><code>block_permuted_internal_only_nfparity_S1_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>S2</td>
+                  <td><code>block_permuted_internal_only_nfparity_S2_A</code></td>
+                  <td><code>block_permuted_internal_only_nfparity_S2_B</code></td>
+                </tr>
+                <tr>
+                  <td>nfparity</td>
+                  <td>S3</td>
+                  <td><code>block_permuted_internal_only_nfparity_S3_A</code></td>
+                  <td><code>block_permuted_internal_only_nfparity_S3_B</code></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <div class="reference-section">
+          <h3>References</h3>
+          <p>
+            [1] U. Schollwock, "The density-matrix renormalization group in
+            the age of matrix product states," Annals of Physics, 2011.
+            <a class="text-link" href="https://doi.org/10.1016/j.aop.2010.09.012">DOI</a>
+          </p>
+          <p>
+            [2] R. Levy, E. Solomonik, and B. K. Clark, "Distributed-memory
+            DMRG via sparse and dense parallel tensor contractions," SC20,
+            2020.
+            <a class="text-link" href="https://doi.org/10.1109/SC41405.2020.00028">DOI</a>
+          </p>
+          <p>
+            [3] M. Fishman, S. White, and E. Stoudenmire, "The ITensor
+            software library for tensor network calculations," SciPost Physics
+            Codebases, 2022.
+            <a class="text-link" href="https://doi.org/10.21468/SciPostPhysCodeb.4">DOI</a>
+          </p>
+          <p>
+            [4] P. Springer and P. Bientinesi, "Design of a high-performance
+            GEMM-like tensor-tensor multiplication," ACM Transactions on
+            Mathematical Software, 2018.
+            <a class="text-link" href="https://doi.org/10.1145/3157733">DOI</a>
+          </p>
+          <p>
+            [5] I. A. Kaliman and A. I. Krylov, "New algorithm for tensor
+            contractions on multi-core CPUs, GPUs, and accelerators enables
+            CCSD and EOM-CCSD calculations with over 1000 basis functions on a
+            single compute node," Journal of Computational Chemistry, 2017.
+            <a class="text-link" href="https://doi.org/10.1002/jcc.24713">DOI</a>
+          </p>
         </div>
       </section>
     </main>

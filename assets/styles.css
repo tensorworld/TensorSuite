@@ -383,6 +383,10 @@ code {
   min-height: 12rem;
 }
 
+.synthetic-detail-page {
+  grid-template-columns: 1fr;
+}
+
 .script-panel {
   display: grid;
   gap: 1px;
@@ -626,6 +630,61 @@ code {
 
 .contributor-grid .resource-card {
   min-height: 8rem;
+}
+
+.tensor-pair-section {
+  margin-top: 2.5rem;
+}
+
+.reference-section {
+  margin-top: 2.5rem;
+}
+
+.tensor-pair-layout-section {
+  margin-top: 1.5rem;
+}
+
+.tensor-pair-layout-section h4 {
+  margin: 0 0 0.8rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.tensor-pair-table-wrap {
+  overflow-x: auto;
+}
+
+.tensor-pair-table {
+  width: 100%;
+  min-width: 48rem;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.tensor-pair-table th,
+.tensor-pair-table td {
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tensor-pair-table th {
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tensor-pair-table td:first-child,
+.tensor-pair-table td:nth-child(2) {
+  color: var(--ink);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tensor-pair-table code {
+  overflow-wrap: anywhere;
 }
 
 .site-footer {
