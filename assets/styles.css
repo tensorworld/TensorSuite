@@ -333,12 +333,18 @@ code {
 }
 
 .resource-card-link {
-  display: block;
+  display: flex;
+  flex-direction: column;
   color: inherit;
   text-decoration: none;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease;
+}
+
+.resource-card-link .text-link {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .resource-card-link:hover {
