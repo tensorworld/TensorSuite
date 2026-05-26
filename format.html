@@ -333,16 +333,16 @@
                   <tr>
                     <td><code>sorted</code></td>
                     <td><code>none</code>, <code>lexicographic</code></td>
-                    <td>Whether entries are sorted.</td>
+                    <td>Whether entries are sorted lexicographically by coordinates, following by mode priority given in <code>sort_order</code>.</td>
                   </tr>
                   <tr>
                     <td><code>sort_order</code></td>
-                    <td>Permutation of mode ids, such as <code>[1,2,3]</code></td>
+                    <td>Sorting order, e.g., <code>[1,2,3]</code></td>
                     <td>Mode priority used for lexicographic sorting.</td>
                   </tr>
                   <tr>
                     <td><code>duplicates</code></td>
-                    <td><code>allowed</code>, <code>disallowed</code>, <code>summed</code></td>
+                    <td><code>allowed</code>, <code>disallowed</code></td>
                     <td>Policy for repeated coordinates.</td>
                   </tr>
                   <tr>
@@ -368,11 +368,11 @@
                   <tr>
                     <td><code>dense_modes</code></td>
                     <td>Mode-id list, such as <code>[]</code> or <code>[1,2]</code></td>
-                    <td>Modes that are dense or nearly dense.</td>
+                    <td>Needed when a tensor is dense or semi-sparse (having dense modes).</td>
                   </tr>
                   <tr>
                     <td><code>block_partitions</code></td>
-                    <td>Mode-size list, such as <code>[110,110,19]</code>, or <code>null</code></td>
+                    <td>Mode-size list for block-sparse tensors, e.g., <code>[110,110,19]</code>, or <code>null</code></td>
                     <td>Number of block partitions in each tensor mode. Use <code>null</code> for tensors without block-sparse structure.</td>
                   </tr>
                   <tr>
