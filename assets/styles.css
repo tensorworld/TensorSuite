@@ -655,6 +655,27 @@ code {
   margin-top: 2.5rem;
 }
 
+.cite-section {
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+}
+
+.cite-section .reference-section {
+  margin-top: 0;
+}
+
+.reference-section pre {
+  margin: 0.5rem 0 0;
+  padding: 1.2rem 1.4rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+}
+
 .tensor-pair-layout-section {
   margin-top: 1.5rem;
 }
@@ -691,8 +712,7 @@ code {
   text-transform: uppercase;
 }
 
-.tensor-pair-table td:first-child,
-.tensor-pair-table td:nth-child(2) {
+.tensor-pair-table td:first-child {
   color: var(--ink);
   font-weight: 800;
   white-space: nowrap;
