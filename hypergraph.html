@@ -39,7 +39,59 @@
         <div class="section-heading">
           <p class="section-kicker">Real Tensor</p>
           <h2>HyperGraph</h2>
-          <p>Hypergraph incidence, interaction, and higher-order relation tensors.</p>
+          <p>
+            This TensorSuite collection includes tensors from hypergraph
+            workloads, where interactions involve more than two nodes
+            simultaneously. Each dataset is represented across multiple
+            tensor orders, from 2D up to higher dimensions depending on
+            the dataset.
+          </p>
+        </div>
+
+        <!-- coauth-DBLP -->
+        <div class="tensor-pair-section">
+          <h3>coauth-DBLP</h3>
+          <p>
+            A temporal higher-order network built from DBLP publications,
+            where nodes are authors and each simplex represents a
+            co-authored publication. Timestamps correspond to the year of
+            publication. Simplices are restricted to at most 25 nodes [1].
+          </p>
+          <div class="tensor-pair-table-wrap">
+            <table class="tensor-pair-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Tensor</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>2</td>
+                <td><a class="text-link" href="#">[Link]</a></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><a class="text-link" href="#">[Link]</a></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><a class="text-link" href="#">[Link]</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="reference-section">
+          <h3>References</h3>
+          <p>
+            [1] A. R. Benson, R. Abebe, M. T. Schaub, A. Jadbabaie, and
+            J. Kleinberg, "Simplicial Closure and Higher-Order Link
+            Prediction," Proceedings of the National Academy of Sciences
+            (PNAS), 2018.
+            <a class="text-link" href="https://doi.org/10.1073/pnas.1800683115">DOI</a>
+          </p>
         </div>
       </section>
     </main>
