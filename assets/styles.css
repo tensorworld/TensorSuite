@@ -686,6 +686,12 @@ code {
   font-size: 1.05rem;
 }
 
+.einsum-line {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
 .tensor-pair-table-wrap {
   overflow-x: auto;
 }

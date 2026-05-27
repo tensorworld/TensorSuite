@@ -68,9 +68,18 @@
             Each contraction system contains a tensor A and tensor B pair. The
             pairs are grouped by layout so links can be attached separately for
             the canonical formulation and the internal permuted layout.
+            The tensor contractions are expressed in einsum notation below.
           </p>
           <section class="tensor-pair-layout-section" aria-labelledby="canonical-formulation-title">
             <h4 id="canonical-formulation-title">Canonical Formulation</h4>
+            <p class="einsum-line">
+              Einsum equations:
+              <code>E1</code>: <code>dea,fag-&gt;defg</code> &nbsp;
+              <code>E2</code>: <code>fbag,bhai-&gt;fghi</code> &nbsp;
+              <code>S1</code>: <code>dae,fga-&gt;defg</code> &nbsp;
+              <code>S2</code>: <code>dea,fagh-&gt;defgh</code> &nbsp;
+              <code>S3</code>: <code>fbghai,baj-&gt;fghij</code>
+            </p>
             <div class="tensor-pair-table-wrap">
               <table class="tensor-pair-table">
                 <thead>
@@ -208,6 +217,12 @@
           </section>
           <section class="tensor-pair-layout-section" aria-labelledby="internal-permuted-layout-title">
             <h4 id="internal-permuted-layout-title">Internal Permuted Layout</h4>
+            <p class="einsum-line">
+              Einsum equations:
+              <code>E1</code> / <code>E2</code> / <code>S1</code>: <code>ade,afg-&gt;defg</code> &nbsp;
+              <code>S2</code>: <code>ade,afgh-&gt;defgh</code> &nbsp;
+              <code>S3</code>: <code>adefg,ah-&gt;defgh</code>
+            </p>
             <div class="tensor-pair-table-wrap">
               <table class="tensor-pair-table">
                 <thead>
