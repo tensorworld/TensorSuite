@@ -261,6 +261,11 @@ h2 {
   align-items: start;
 }
 
+.format,
+#synthetic.split {
+  grid-template-columns: 1fr;
+}
+
 .content-section p {
   color: var(--muted);
 }
@@ -628,8 +633,18 @@ code {
   margin-top: auto;
 }
 
-.contributor-grid .resource-card {
-  min-height: 8rem;
+.contributor-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contributor-list li {
+  font-size: 1.05rem;
+  color: var(--text);
 }
 
 .tensor-pair-section {
