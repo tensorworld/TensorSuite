@@ -692,6 +692,14 @@ code {
   color: var(--muted);
 }
 
+.tensor-meta {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-family: monospace;
+}
+
 .tensor-pair-table-wrap {
   overflow-x: auto;
 }
