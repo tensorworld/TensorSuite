@@ -40,9 +40,13 @@
           <p class="section-kicker">Synthetic Tensor Generation</p>
           <h2>Block-wise</h2>
           <p>
-            Block-wise synthetic generators create structured sparse tensors
-            composed of dense blocks, where the block-level sparsity pattern
-            follows a given distribution.
+            Block-wise synthetic generators produce matched pairs of
+            block-sparse tensors for contraction operations. Users can drive
+            generation from an einsum string or from raw mode counts, and
+            configure block partitions, partition-size distributions
+            (random, uniform, mixed, or power-law), and the block-level
+            sparsity pattern. All runs are reproducible, with parameters and
+            the einsum specification recorded in each output bundle.
           </p>
         </div>
         <div class="resource-grid">
