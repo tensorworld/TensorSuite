@@ -1,0 +1,8 @@
+{
+  "tensors": [
+    { "name": "JF17K-3",      "order": 3, "size": [0, 0, 0],    "nnz": 0 },
+    { "name": "JF17K-4",      "order": 4, "size": [0, 0, 0, 0], "nnz": 0 },
+    { "name": "WikiPeople-3", "order": 3, "size": [0, 0, 0],    "nnz": 0 },
+    { "name": "WikiPeople-4", "order": 4, "size": [0, 0, 0, 0], "nnz": 0 }
+  ]
+}
