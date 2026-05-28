@@ -676,28 +676,6 @@ code {
   white-space: pre;
 }
 
-.tensor-dims {
-  margin: 0.35rem 0 0.9rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-}
-
-.tensor-table-loading {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
-.tensor-info-table {
-  min-width: 18rem;
-}
-
-.tensor-nnz {
-  font-variant-numeric: tabular-nums;
-}
-
 .tensor-pair-layout-section {
   margin-top: 1.5rem;
 }
