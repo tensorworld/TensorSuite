@@ -683,19 +683,12 @@ code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
-.tensor-table-loading {
-  margin: 0;
+.tensor-nnz-row td {
   color: var(--muted);
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
-.tensor-info-table {
-  min-width: 18rem;
-}
-
-.tensor-nnz {
+  font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  border-bottom: 0;
 }
 
 .tensor-pair-layout-section {
