@@ -24,6 +24,7 @@
               <a href="format.html#bundle-layout">Bundle Layout</a>
               <a href="format.html#tensor-data-files">Tensor Data Files</a>
               <a href="format.html#metadata-json-file">Metadata JSON File</a>
+              <a href="format.html#reference-io">Reference IO</a>
             </div>
           </div>
           <a href="real.html">Real</a>
@@ -464,6 +465,71 @@
   }
 }</code></pre>
               </div>
+            </div>
+          </section>
+
+          <section class="format-mode-section" id="reference-io" aria-labelledby="reference-io-title">
+            <div class="format-mode-heading">
+              <p class="section-kicker">Reference IO</p>
+              <h3 id="reference-io-title">Reading and writing bundles in Python.</h3>
+              <p>
+                A small reference implementation reads and writes the
+                <code>.tns</code> and <code>.tnsb</code> files and cross-checks
+                them against the metadata JSON. The core read/write helpers are
+                listed below; the full source is available in
+                <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/tensorsuiteIO">tensorsuiteIO</a>.
+              </p>
+            </div>
+            <div class="attribute-table-wrap">
+              <table class="attribute-table">
+                <thead>
+                  <tr>
+                    <th>Function</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>read_tns(path, metadata=None)</code></td>
+                    <td>Read a <code>.tns</code> file, automatically dispatching to the element-wise or block-wise reader based on <code>sparsity_type</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>write_tns(path, name, dims, coords, values, ...)</code></td>
+                    <td>Write coordinates and optional values to an element-wise <code>.tns</code> text file with the standard header and size line.</td>
+                  </tr>
+                  <tr>
+                    <td><code>write_tnsb_from_tns(tns_path, tnsb_path, ...)</code></td>
+                    <td>Convert a text <code>.tns</code> file into the binary <code>.tnsb</code> form using the given index, value, and endianness types.</td>
+                  </tr>
+                  <tr>
+                    <td><code>read_tnsb_records(path, limit=None, ...)</code></td>
+                    <td>Read packed records from a binary <code>.tnsb</code> file, optionally limited to a sample for inspection.</td>
+                  </tr>
+                  <tr>
+                    <td><code>cross_check_header_metadata(header, metadata)</code></td>
+                    <td>Verify that a file header (version, name, order, dimensions, nnz, and block fields) matches the metadata JSON.</td>
+                  </tr>
+                  <tr>
+                    <td><code>cross_check_tns_tnsb(tns_path, tnsb_path, ...)</code></td>
+                    <td>Confirm that a text file and its binary counterpart agree on header fields and sampled records.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="example-block">
+              <p class="example-caption">Example: read, write, and cross-check a bundle</p>
+              <pre class="format-example metadata-json-example" aria-label="TensorSuite IO usage example"><code>import tensorsuite as ts
+
+# Read a bundle (element-wise or block-wise is auto-detected)
+data = ts.read_tns("example-tensor/example-tensor.tns")
+
+# Write an element-wise tensor to text, then to binary
+ts.write_tns("out/example-tensor.tns", "example-tensor",
+             dims=[4, 3, 2], coords=coords, values=values, index_base=1)
+ts.write_tnsb_from_tns("out/example-tensor.tns", "out/example-tensor.tnsb")
+
+# Cross-check the text and binary files against each other
+ts.cross_check_tns_tnsb("out/example-tensor.tns", "out/example-tensor.tnsb")</code></pre>
             </div>
           </section>
         </div>
