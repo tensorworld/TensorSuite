@@ -437,7 +437,8 @@ code {
   max-width: 48rem;
 }
 
-#metadata-json-file .format-mode-heading {
+#metadata-json-file .format-mode-heading,
+#reference-io .format-mode-heading {
   max-width: none;
 }
 
