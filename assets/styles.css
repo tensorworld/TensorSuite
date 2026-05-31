@@ -479,8 +479,7 @@ code {
 }
 
 .bundle-layout-group .format-notes {
-  grid-template-columns: repeat(2, minmax(0, 14rem));
-  max-width: 29rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .bundle-layout-group .format-notes article {
