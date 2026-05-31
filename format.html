@@ -476,9 +476,17 @@
                 A small reference implementation builds, validates, reads, and
                 writes metadata against the canonical TensorSuite schema, then
                 reads and writes <code>.tns</code> and <code>.tnsb</code> files
-                and cross-checks them against that metadata. The core helpers
-                are listed below; the full source is available in
-                <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/tensorsuiteIO">tensorsuiteIO</a>.
+                and cross-checks them against that metadata. For now, reading,
+                cross-checking, and validation only verify the tensor size
+                information; the other tensor attributes recorded in the
+                metadata still need to be applied by users to generate the
+                tensors they need.
+              </p>
+              <p>
+                The core helpers are listed below; the full source is available
+                in
+                <a class="text-link" href="https://github.com/tensorworld/TensorSuite-Code/tree/main/tensorsuiteIO">tensorsuiteIO</a>
+                in Python. We will release a C/C++ version later.
               </p>
             </div>
             <div class="attribute-table-wrap">
