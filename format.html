@@ -491,24 +491,36 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><code>build_metadata(...)</code></td>
-                    <td>Build a canonical TensorSuite metadata dictionary with version <code>0.1</code>, 1-based <code>sort_order</code>, and block fields set according to <code>sparsity_type</code>.</td>
+                    <td><code>read_metadata(path)</code></td>
+                    <td>Read metadata JSON and validate it against the canonical TensorSuite schema.</td>
                   </tr>
                   <tr>
                     <td><code>validate_tensorsuite_metadata(metadata)</code></td>
                     <td>Validate metadata against the canonical TensorSuite schema for real/synthetic and element/block tensors.</td>
                   </tr>
                   <tr>
-                    <td><code>write_metadata(path, metadata)</code></td>
-                    <td>Validate and write canonical TensorSuite metadata JSON.</td>
-                  </tr>
-                  <tr>
-                    <td><code>read_metadata(path)</code></td>
-                    <td>Read metadata JSON and validate it against the canonical TensorSuite schema.</td>
-                  </tr>
-                  <tr>
                     <td><code>read_tns(path, metadata=None)</code></td>
                     <td>Read a <code>.tns</code> file, automatically dispatching to the element-wise or block-wise reader based on <code>sparsity_type</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>cross_check_header_metadata(header, metadata)</code></td>
+                    <td>Verify that a file header (version, name, order, dimensions, nnz, and block fields) matches the metadata JSON.</td>
+                  </tr>
+                  <tr>
+                    <td><code>read_tnsb_records(path, limit=None, ...)</code></td>
+                    <td>Read packed records from a binary <code>.tnsb</code> file, optionally limited to a sample for inspection.</td>
+                  </tr>
+                  <tr>
+                    <td><code>cross_check_tns_tnsb(tns_path, tnsb_path, ...)</code></td>
+                    <td>Confirm that a text file and its binary counterpart agree on header fields and sampled records.</td>
+                  </tr>
+                  <tr>
+                    <td><code>build_metadata(...)</code></td>
+                    <td>Build a canonical TensorSuite metadata dictionary with version <code>0.1</code>, 1-based <code>sort_order</code>, and block fields set according to <code>sparsity_type</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>write_metadata(path, metadata)</code></td>
+                    <td>Validate and write canonical TensorSuite metadata JSON.</td>
                   </tr>
                   <tr>
                     <td><code>write_tns(path, name, dims, coords, values, ...)</code></td>
@@ -517,18 +529,6 @@
                   <tr>
                     <td><code>write_tnsb_from_tns(tns_path, tnsb_path, ...)</code></td>
                     <td>Convert a text <code>.tns</code> file into the binary <code>.tnsb</code> form using the given index, value, and endianness types.</td>
-                  </tr>
-                  <tr>
-                    <td><code>read_tnsb_records(path, limit=None, ...)</code></td>
-                    <td>Read packed records from a binary <code>.tnsb</code> file, optionally limited to a sample for inspection.</td>
-                  </tr>
-                  <tr>
-                    <td><code>cross_check_header_metadata(header, metadata)</code></td>
-                    <td>Verify that a file header (version, name, order, dimensions, nnz, and block fields) matches the metadata JSON.</td>
-                  </tr>
-                  <tr>
-                    <td><code>cross_check_tns_tnsb(tns_path, tnsb_path, ...)</code></td>
-                    <td>Confirm that a text file and its binary counterpart agree on header fields and sampled records.</td>
                   </tr>
                 </tbody>
               </table>
@@ -551,6 +551,7 @@ dims = [4, 3, 2]
 coords = np.array([[0, 0, 0], [0, 1, 1], [1, 2, 0]], dtype=np.uint64)
 values = np.array([1.0, 2.5, 4.0], dtype=np.float64)
 
+# Build and write tensor files
 metadata = build_metadata(
     name=name,
     dims=dims,
@@ -574,7 +575,6 @@ header = write_tns(
     values=values,
     index_base=metadata["index_base"],
 )
-cross_check_header_metadata(header, metadata)
 
 write_tnsb_from_tns(
     f"out/{name}.tns",
@@ -583,10 +583,12 @@ write_tnsb_from_tns(
     value_type=metadata["value_type"],
     endianness=metadata["endianness"],
 )
-cross_check_tns_tnsb(f"out/{name}.tns", f"out/{name}.tnsb", metadata=metadata)
 
+# Read and cross-check tensor files
 loaded_metadata = read_metadata(f"out/{name}_metadata.json")
-data = read_tns(f"out/{name}.tns", metadata=loaded_metadata)</code></pre>
+data = read_tns(f"out/{name}.tns", metadata=loaded_metadata)
+cross_check_header_metadata(header, metadata)
+cross_check_tns_tnsb(f"out/{name}.tns", f"out/{name}.tnsb", metadata=loaded_metadata)</code></pre>
             </div>
           </section>
         </div>
