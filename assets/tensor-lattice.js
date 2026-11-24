@@ -1,32 +1,47 @@
 (() => {
   const canvas = document.querySelector("#tensor-canvas");
-  if (!canvas) return;
+  if (!canvas || !canvas.parentElement) return;
 
+  const hero = canvas.parentElement;
   const context = canvas.getContext("2d");
-  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (!context) return;
   const palette = ["#008f8c", "#4f9d69", "#e85d4f", "#c58a00"];
-  let width = 0;
-  let height = 0;
-  let nodes = [];
-  let rafId = null;
 
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    const ratio = window.devicePixelRatio || 1;
-    width = rect.width;
-    height = rect.height;
-    canvas.width = Math.max(1, Math.floor(width * ratio));
-    canvas.height = Math.max(1, Math.floor(height * ratio));
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    buildNodes();
+  const nodeLayer = document.createElement("div");
+  nodeLayer.className = "tensor-nodes";
+  nodeLayer.setAttribute("aria-hidden", "true");
+  canvas.insertAdjacentElement("afterend", nodeLayer);
+
+  const phases = [];
+  for (let i = 0; i < 125; i += 1) {
+    phases.push(-(Math.random() * 4.5).toFixed(2));
   }
 
-  function buildNodes() {
-    const centerX = width * 0.68;
-    const centerY = height * 0.47;
-    const depth = Math.min(width, height) * 0.12;
-    const gap = Math.min(width, height) * 0.09;
-    nodes = [];
+  let resizeRafId = null;
+  let isVisible = true;
+
+  function updatePauseState() {
+    nodeLayer.classList.toggle("is-paused", !isVisible || document.hidden);
+  }
+
+  function render() {
+    const heroRect = hero.getBoundingClientRect();
+    const heroWidth = heroRect.width;
+    const heroHeight = heroRect.height;
+    if (!heroWidth || !heroHeight) return;
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+    const centerX = heroWidth * 0.68;
+    const centerY = heroHeight * 0.47;
+    const depth = Math.min(heroWidth, heroHeight) * 0.12;
+    const gap = Math.min(heroWidth, heroHeight) * 0.09;
+
+    const nodes = [];
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    let idx = 0;
 
     for (let z = -2; z <= 2; z += 1) {
       for (let y = -2; y <= 2; y += 1) {
@@ -34,65 +49,120 @@
           const projectionX = centerX + x * gap + z * depth;
           const projectionY = centerY + y * gap - z * depth * 0.54;
           const active = (x + y + z + 6) % 4 === 0 || (x === 0 && y === 0);
+          const color = palette[Math.abs(x + y * 2 + z * 3) % palette.length];
           nodes.push({
             x: projectionX,
             y: projectionY,
             z,
             active,
-            color: palette[Math.abs(x + y * 2 + z * 3) % palette.length],
-            phase: Math.random() * Math.PI * 2,
+            color,
+            delay: phases[idx],
           });
+          idx += 1;
+
+          if (projectionX < minX) minX = projectionX;
+          if (projectionY < minY) minY = projectionY;
+          if (projectionX > maxX) maxX = projectionX;
+          if (projectionY > maxY) maxY = projectionY;
         }
       }
     }
-  }
 
-  function draw(time = 0) {
-    context.clearRect(0, 0, width, height);
+    // Crop static canvas tightly to the lattice bounding box
+    const pad = 12;
+    const offsetX = Math.max(0, Math.floor(minX - pad));
+    const offsetY = Math.max(0, Math.floor(minY - pad));
+    const boxWidth = Math.max(1, Math.min(heroWidth - offsetX, Math.ceil(maxX + pad) - offsetX));
+    const boxHeight = Math.max(1, Math.min(heroHeight - offsetY, Math.ceil(maxY + pad) - offsetY));
+
+    canvas.style.left = `${offsetX}px`;
+    canvas.style.top = `${offsetY}px`;
+    canvas.style.right = "auto";
+    canvas.style.bottom = "auto";
+    canvas.style.width = `${boxWidth}px`;
+    canvas.style.height = `${boxHeight}px`;
+
+    canvas.width = Math.max(1, Math.floor(boxWidth * ratio));
+    canvas.height = Math.max(1, Math.floor(boxHeight * ratio));
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    // Draw all static edges (deduplicated & batched) + static inactive nodes once
+    context.clearRect(0, 0, boxWidth, boxHeight);
     context.lineWidth = 1.25;
 
-    for (const a of nodes) {
-      for (const b of nodes) {
-        const horizontal = Math.abs(a.x - b.x) < 2 && Math.abs(a.y - b.y) < 120;
-        const diagonal = Math.abs(a.x - b.x) < 95 && Math.abs(a.y - b.y) < 55 && a.z !== b.z;
-        if (a === b || (!horizontal && !diagonal)) continue;
+    const activeEdges = new Path2D();
+    const inactiveEdges = new Path2D();
 
-        const distance = Math.hypot(a.x - b.x, a.y - b.y);
-        if (distance > 115) continue;
+    for (let i = 0; i < nodes.length; i += 1) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j += 1) {
+        const b = nodes[j];
+        const dx = Math.abs(a.x - b.x);
+        const dy = Math.abs(a.y - b.y);
+        const horizontal = dx < 2 && dy < 120;
+        const diagonal = dx < 95 && dy < 55 && a.z !== b.z;
+        if (!horizontal && !diagonal) continue;
+        if (dx * dx + dy * dy > 115 * 115) continue;
 
-        context.beginPath();
-        context.strokeStyle = a.active && b.active ? "rgba(0, 143, 140, 0.24)" : "rgba(23, 32, 42, 0.07)";
-        context.moveTo(a.x, a.y);
-        context.lineTo(b.x, b.y);
-        context.stroke();
+        const targetPath = a.active && b.active ? activeEdges : inactiveEdges;
+        targetPath.moveTo(a.x - offsetX, a.y - offsetY);
+        targetPath.lineTo(b.x - offsetX, b.y - offsetY);
       }
     }
 
-    for (const node of nodes) {
-      const pulse = mediaQuery.matches ? 0 : Math.sin(time * 0.0014 + node.phase) * 1.5;
-      const radius = node.active ? 4.8 + pulse : 2.4;
-      context.beginPath();
-      context.fillStyle = node.active ? node.color : "rgba(23, 32, 42, 0.28)";
-      context.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      context.fill();
-    }
+    context.strokeStyle = "rgba(23, 32, 42, 0.13)";
+    context.stroke(inactiveEdges);
 
-    if (!mediaQuery.matches) {
-      rafId = window.requestAnimationFrame(draw);
-    }
-  }
+    context.strokeStyle = "rgba(0, 143, 140, 0.42)";
+    context.stroke(activeEdges);
 
-  function start() {
-    if (rafId) window.cancelAnimationFrame(rafId);
-    rafId = null;
-    draw();
+    context.beginPath();
+    context.fillStyle = "rgba(23, 32, 42, 0.28)";
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < nodes.length; i += 1) {
+      const node = nodes[i];
+      if (!node.active) {
+        const lx = node.x - offsetX;
+        const ly = node.y - offsetY;
+        context.moveTo(lx + 2.4, ly);
+        context.arc(lx, ly, 2.4, 0, Math.PI * 2);
+      } else {
+        const el = document.createElement("span");
+        el.className = "tensor-node";
+        el.style.left = `${node.x}px`;
+        el.style.top = `${node.y}px`;
+        el.style.backgroundColor = node.color;
+        el.style.animationDelay = `${node.delay}s`;
+        fragment.appendChild(el);
+      }
+    }
+    context.fill();
+
+    nodeLayer.replaceChildren(fragment);
   }
 
   window.addEventListener("resize", () => {
-    resize();
-    start();
+    if (resizeRafId !== null) return;
+    resizeRafId = window.requestAnimationFrame(() => {
+      resizeRafId = null;
+      render();
+    });
   });
-  mediaQuery.addEventListener("change", start);
-  resize();
-  start();
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+        updatePauseState();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+  }
+
+  document.addEventListener("visibilitychange", updatePauseState);
+
+  render();
+  updatePauseState();
 })();
