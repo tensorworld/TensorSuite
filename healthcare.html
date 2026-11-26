@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Higher-Arity Relational Knowledge Graph tensor datasets in TensorSuite."
+    >
+    <title>Clinical Time Series and Claims | TensorSuite</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary navigation">
+      <div class="site-header-inner">
+        <a class="brand" href="./" aria-label="TensorSuite home">
+          <span class="brand-mark" aria-hidden="true">TS</span>
+          <span>TensorSuite</span>
+        </a>
+        <nav class="nav-links" aria-label="Project links">
+          <div class="nav-dropdown">
+            <a href="format.html">Format</a>
+            <div class="dropdown-menu" aria-label="Format sections">
+              <a href="format.html#bundle-layout">Bundle Layout</a>
+              <a href="format.html#tensor-data-files">Tensor Data Files</a>
+              <a href="format.html#metadata-json-file">Metadata JSON File</a>
+              <a href="format.html#reference-io">Reference IO</a>
+            </div>
+          </div>
+          <a class="active" href="real.html">Real</a>
+          <a href="synthetic.html">Synthetic</a>
+          <a href="related.html">Related</a>
+          <a href="contributors.html">Contributors</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="content-section first-section">
+        <div class="section-heading">
+          <p class="section-kicker">Real Tensor</p>
+          <h2>Clinical Time Series and Claims</h2>
+          <p>
+            This TensorSuite collection includes <strong>element-wise</strong>
+            tensors from openly accessible clinical data: ICU vital signs and lab measurements from PhysioNet challenges and open demo databases, and synthetic Medicare claims from CMS. All sources are open access; none requires credentialing.
+          </p>
+        </div>
+        <div class="tensor-pair-section">
+          <h3>Tensors</h3>
+        <div class="tensor-pair-table-wrap">
+          <table class="tensor-pair-table">
+            <thead>
+              <tr>
+                <th>Tensor</th>
+                <th>Description</th>
+                <th>Modes</th>
+                <th>Values</th>
+                <th>License</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>cms-synpuf-s1</code> [1]<br><span class="tensor-meta">order: 3, dim: 85746×11856×9552, nnz: 11,572,078</span></td>
+                <td>Synthetic Medicare inpatient and outpatient claims (DE-SynPUF Sample 1).</td>
+                <td>beneficiary × diagnosis code × procedure / claim code</td>
+                <td>nonnegative <span class="tensor-meta">int32</span></td>
+                <td>Public domain (U.S. Gov.)</td>
+              </tr>
+              <tr>
+                <td><code>physionet2019A-first48h</code> [2]<br><span class="tensor-meta">order: 3, dim: 20336×34×48, nnz: 5,035,250</span></td>
+                <td>34 vital and lab measurements over the first 48 hours of 20,336 patients (training set A).</td>
+                <td>patient × measurement × hour</td>
+                <td>general <span class="tensor-meta">float64</span></td>
+                <td><a class="text-link" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></td>
+              </tr>
+              <tr>
+                <td><code>physionet2012A-hourly</code> [3]<br><span class="tensor-meta">order: 3, dim: 4000×37×48, nnz: 1,436,033</span></td>
+                <td>37 ICU time-series variables over the first 48 hours of 4,000 patients (set A).</td>
+                <td>patient × variable × hour</td>
+                <td>general <span class="tensor-meta">float64</span></td>
+                <td><a class="text-link" href="https://opendatacommons.org/licenses/by/1-0/">ODC-By 1.0</a></td>
+              </tr>
+              <tr>
+                <td><code>eicu-demo-vitals48h</code> [4]<br><span class="tensor-meta">order: 3, dim: 2375×8×576, nnz: 2,908,951</span></td>
+                <td>8 vital signs over the first 48 hours of ICU stays in 5-minute bins (eICU demo).</td>
+                <td>ICU stay × vital sign × time (5 min)</td>
+                <td>general <span class="tensor-meta">float64</span></td>
+                <td><a class="text-link" href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0</a></td>
+              </tr>
+              <tr>
+                <td><code>mimiciii-demo-chartevents48h</code> [5]<br><span class="tensor-meta">order: 3, dim: 100×64×2880, nnz: 54,817</span></td>
+                <td>64 most frequent numeric chart items over the first 48 hours at 1-minute resolution (MIMIC-III demo).</td>
+                <td>patient × chart item × minute</td>
+                <td>general <span class="tensor-meta">float64</span></td>
+                <td><a class="text-link" href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="reference-section">
+          <h3>License</h3>
+          <p>Each tensor is redistributed under the license of its upstream dataset, listed in the table above and in the bundle <code>README.md</code>. Tensors under a ShareAlike license (CC BY-SA or ODbL) are adaptations of their source data and must be shared under the same license.</p>
+          <p>DE-SynPUF is synthetic data: the derived tensor is not an official CMS release and is not suitable for clinical or epidemiological inference.</p>
+        </div>
+        <div class="reference-section">
+          <h3>References</h3>
+          <p>
+            [1] Centers for Medicare &amp; Medicaid Services, "2008–2010 Data Entrepreneurs' Synthetic Public Use File (DE-SynPUF)," Sample 1.
+            <a class="text-link" href="https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-claims-synthetic-public-use-files/cms-2008-2010-data-entrepreneurs-synthetic-public-use-file-de-synpuf/de10-sample-1">Website</a>
+          </p>
+          <p>
+            [2] M. A. Reyna et al., "Early Prediction of Sepsis from Clinical Data: The PhysioNet/Computing in Cardiology Challenge 2019," Critical Care Medicine, 48(2):210–217, 2020.
+            <a class="text-link" href="https://physionet.org/content/challenge-2019/1.0.0/">Website</a>
+          </p>
+          <p>
+            [3] I. Silva, G. Moody, D. J. Scott, L. A. Celi, and R. G. Mark, "Predicting In-Hospital Mortality of ICU Patients: The PhysioNet/Computing in Cardiology Challenge 2012," Computing in Cardiology, 2012.
+            <a class="text-link" href="https://physionet.org/content/challenge-2012/1.0.0/">Website</a>
+          </p>
+          <p>
+            [4] T. J. Pollard, A. E. W. Johnson, J. D. Raffa, L. A. Celi, R. G. Mark, and O. Badawi, "The eICU Collaborative Research Database, a freely available multi-center database for critical care research," Scientific Data, 5:180178, 2018.
+            <a class="text-link" href="https://physionet.org/content/eicu-crd-demo/2.0.1/">Website</a>
+          </p>
+          <p>
+            [5] A. E. W. Johnson, T. J. Pollard, L. Shen, L. H. Lehman, M. Feng, M. Ghassemi, B. Moody, P. Szolovits, L. A. Celi, and R. G. Mark, "MIMIC-III, a freely accessible critical care database," Scientific Data, 3:160035, 2016.
+            <a class="text-link" href="https://physionet.org/content/mimiciii-demo/1.4/">Website</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>TensorSuite by <a href="https://tensorworld.github.io/">TensorWorld</a> Research Group at <a href="https://csc.ncsu.edu/">NCSU</a></span>
+      <span>Contact: Jiajia Li (<a class="text-link" href="mailto:jiajia.li@ncsu.edu">jiajia.li@ncsu.edu</a>)</span>
+
+    </footer>
+    <script src="assets/nav.js" defer></script>
+  </body>
+</html>

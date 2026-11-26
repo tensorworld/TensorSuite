@@ -7,7 +7,7 @@
       name="description"
       content="Higher-Arity Relational Knowledge Graph tensor datasets in TensorSuite."
     >
-    <title>Higher-Arity Relational Knowledge Graphs | TensorSuite</title>
+    <title>Knowledge Graphs | TensorSuite</title>
     <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body>
@@ -39,7 +39,7 @@
       <section class="content-section first-section">
         <div class="section-heading">
           <p class="section-kicker">Real Tensor</p>
-          <h2>Higher-Arity Relational Knowledge Graphs</h2>
+          <h2>Relational Knowledge Graphs</h2>
           <p>
             This TensorSuite collection includes <strong>element-wise</strong>
             tensors from higher-arity
@@ -53,11 +53,11 @@
             datasets: <code>JF17K</code> [1], derived from the popular knowledge
             graph Freebase, and <code>WikiPeople</code> [2]. Each dataset is
             represented at two arity levels, 3-ary and 4-ary, yielding four
-            tensors in total.
+            higher-arity tensors.
           </p>
         </div>
         <div class="tensor-pair-section">
-          <h3>Tensors</h3>
+          <h3>Higher-Arity Knowledge Graphs</h3>
           <div class="tensor-pair-table-wrap">
             <table class="tensor-pair-table">
               <thead>
@@ -82,6 +82,55 @@
             </table>
           </div>
         </div>
+        <div class="tensor-pair-section">
+          <h3>Triple Knowledge Graphs</h3>
+          <p>
+            TensorSuite also includes <strong>element-wise</strong> 3-mode
+            tensors from large binary-relation knowledge graphs, where each
+            fact is a (subject, relation, object) triple.
+          </p>
+        <div class="tensor-pair-table-wrap">
+          <table class="tensor-pair-table">
+            <thead>
+              <tr>
+                <th>Tensor</th>
+                <th>Description</th>
+                <th>Modes</th>
+                <th>Values</th>
+                <th>License</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>openlibrary-subjects-3d</code> [3]<br><span class="tensor-meta">order: 3, dim: 7620001×19880979×1846614, nnz: 68,870,717</span></td>
+                <td>Book subject annotations from the Open Library works dump (2026-09-30).</td>
+                <td>first author × work × subject</td>
+                <td>binary <span class="tensor-meta">int32</span></td>
+                <td><a class="text-link" href="https://openlibrary.org/developers/licensing">No known copyright</a></td>
+              </tr>
+              <tr>
+                <td><code>codex-l-positive</code> [4]<br><span class="tensor-meta">order: 3, dim: 77951×69×77951, nnz: 612,437</span></td>
+                <td>All positive triples of the CoDEx-L completion benchmark, derived from Wikidata.</td>
+                <td>subject × relation × object</td>
+                <td>binary <span class="tensor-meta">int32</span></td>
+                <td><a class="text-link" href="https://github.com/tsafavi/codex/blob/master/LICENSE">MIT</a></td>
+              </tr>
+              <tr>
+                <td><code>yago4-en-20200224</code> [5]<br><span class="tensor-meta">order: 3, dim: 5245155×131×4945843, nnz: 22,219,753</span></td>
+                <td>English-entity RDF facts of YAGO 4 (2020-02-24), including literal objects.</td>
+                <td>subject × predicate × object</td>
+                <td>nonnegative <span class="tensor-meta">int32</span></td>
+                <td><a class="text-link" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="reference-section">
+          <h3>License</h3>
+          <p>For the triple knowledge graph tensors, each tensor is redistributed under the license of its upstream dataset, listed in the triple knowledge graph table above and in the bundle <code>README.md</code>. Tensors under a ShareAlike license (CC BY-SA or ODbL) are adaptations of their source data and must be shared under the same license.</p>
+          <p>CoDEx is released under the MIT License, Copyright (c) 2021 Tara Safavi; the license text is included in the bundle README.</p>
+        </div>
         <div class="reference-section">
           <h3>References</h3>
           <p>
@@ -94,6 +143,18 @@
             [2] S. Guan, X. Jin, Y. Wang, and X. Cheng, "Link Prediction on
             N-ary Relational Data," WWW, 2019.
             <a class="text-link" href="https://dl.acm.org/doi/10.1145/3308558.3313414">DOI</a>
+          </p>
+          <p>
+            [3] Internet Archive, "Open Library Data Dumps," 2026.
+            <a class="text-link" href="https://openlibrary.org/developers/dumps">Website</a>
+          </p>
+          <p>
+            [4] T. Safavi and D. Koutra, "CoDEx: A Comprehensive Knowledge Graph Completion Benchmark," EMNLP, 2020.
+            <a class="text-link" href="https://github.com/tsafavi/codex">GitHub</a>
+          </p>
+          <p>
+            [5] T. Pellissier Tanon, G. Weikum, and F. Suchanek, "YAGO 4: A Reason-able Knowledge Base," ESWC, 2020.
+            <a class="text-link" href="https://yago-knowledge.org/downloads/yago-4">Website</a>
           </p>
         </div>
       </section>
