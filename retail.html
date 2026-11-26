@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Higher-Arity Relational Knowledge Graph tensor datasets in TensorSuite."
+    >
+    <title>Retail Transactions | TensorSuite</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary navigation">
+      <div class="site-header-inner">
+        <a class="brand" href="./" aria-label="TensorSuite home">
+          <span class="brand-mark" aria-hidden="true">TS</span>
+          <span>TensorSuite</span>
+        </a>
+        <nav class="nav-links" aria-label="Project links">
+          <div class="nav-dropdown">
+            <a href="format.html">Format</a>
+            <div class="dropdown-menu" aria-label="Format sections">
+              <a href="format.html#bundle-layout">Bundle Layout</a>
+              <a href="format.html#tensor-data-files">Tensor Data Files</a>
+              <a href="format.html#metadata-json-file">Metadata JSON File</a>
+              <a href="format.html#reference-io">Reference IO</a>
+            </div>
+          </div>
+          <a class="active" href="real.html">Real</a>
+          <a href="synthetic.html">Synthetic</a>
+          <a href="related.html">Related</a>
+          <a href="contributors.html">Contributors</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="content-section first-section">
+        <div class="section-heading">
+          <p class="section-kicker">Real Tensor</p>
+          <h2>Retail Transactions</h2>
+          <p>
+            This TensorSuite collection includes <strong>element-wise</strong>
+            tensors from transactional retail data: signed net purchase quantities of a UK-based online retailer, where returns appear as negative values.
+          </p>
+        </div>
+        <div class="tensor-pair-section">
+          <h3>Tensors</h3>
+        <div class="tensor-pair-table-wrap">
+          <table class="tensor-pair-table">
+            <thead>
+              <tr>
+                <th>Tensor</th>
+                <th>Description</th>
+                <th>Modes</th>
+                <th>Values</th>
+                <th>License</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>online-retail-II-capped</code> [1]<br><span class="tensor-meta">order: 3, dim: 4096×4646×730, nnz: 526,530</span></td>
+                <td>Signed net purchase quantities of a UK online retailer over 730 days (up to 4,096 customers).</td>
+                <td>customer × stock code × day</td>
+                <td>general <span class="tensor-meta">int32</span></td>
+                <td><a class="text-link" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="reference-section">
+          <h3>License</h3>
+          <p>Each tensor is redistributed under the license of its upstream dataset, listed in the table above and in the bundle <code>README.md</code>. Please credit the original dataset when using these tensors.</p>
+
+        </div>
+        <div class="reference-section">
+          <h3>References</h3>
+          <p>
+            [1] D. Chen, "Online Retail II," UCI Machine Learning Repository, 2019.
+            <a class="text-link" href="https://doi.org/10.24432/C5CG6D">DOI</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>TensorSuite by <a href="https://tensorworld.github.io/">TensorWorld</a> Research Group at <a href="https://csc.ncsu.edu/">NCSU</a></span>
+      <span>Contact: Jiajia Li (<a class="text-link" href="mailto:jiajia.li@ncsu.edu">jiajia.li@ncsu.edu</a>)</span>
+
+    </footer>
+    <script src="assets/nav.js" defer></script>
+  </body>
+</html>
